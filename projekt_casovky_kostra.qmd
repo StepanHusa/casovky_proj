@@ -1,0 +1,167 @@
+---
+title: "Projekt do předmětu Časové řady I"
+author: "Michal Červenka, Martin Heger, Štěpán Husa"
+date: "2025-12-15"
+lang: cs
+format:
+  html:
+    theme: default
+    toc: true
+    toc-depth: 3
+    toc-title: "Obsah"
+    code-fold: true
+code-tools: true
+embed-resources: true
+fig-cap: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+# Úvod
+
+## 1. Načtení knihoven
+
+```{r}
+#| label: knihovny
+#| echo: true
+
+# Načtení potřebných balíčků
+# if (!require(forecast)) install.packages("forecast", repos = "https://cloud.r-project.org")
+# library(forecast)
+# library(tseries)
+# library(ggplot2)
+# library(dplyr)
+```
+
+## 2. Načtení dat
+
+```{r}
+#| label: data
+#| echo: true
+
+# Načtení datasetu
+# data <- read.csv("data.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+# data$DATE <- as.Date(data$DATE)
+# head(data)
+```
+
+## 3. Popis dat
+
+```{r}
+#| label: popis-dat
+#| echo: true
+
+# summary(data)
+# plot(data$DATE, data$hodnota, type = "l", main = "Vývoj časové řady", xlab = "Datum", ylab = "Hodnota")
+```
+
+---
+
+# Analýza
+
+## 1. Předběžný výzkum časové řady
+
+```{r}
+#| label: vyzkum
+#| echo: true
+
+# ts_data <- ts(data$hodnota, start = c(1992, 1), frequency = 12)
+# plot(ts_data, main = "Časová řada", ylab = "Hodnota", xlab = "Čas")
+```
+
+## 2. Transformace časové řady
+
+```{r}
+#| label: transformace
+#| echo: true
+
+# log_ts <- log(ts_data)
+# sqrt_ts <- sqrt(ts_data)
+# par(mfrow = c(3,1))
+# plot(ts_data, main = "Původní řada")
+# plot(log_ts, main = "Log transformace")
+# plot(sqrt_ts, main = "Odmocnina")
+```
+
+## 3. Testování stacionarity
+
+```{r}
+#| label: stacionarita
+#| echo: true
+
+# adf.test(ts_data)
+# adf.test(diff(ts_data))
+```
+
+## 4. Autokorelace a parciální autokorelace
+
+```{r}
+#| label: acf-pacf
+#| echo: true
+
+# acf(ts_data)
+# pacf(ts_data)
+```
+
+## 5. Výběr vhodných modelů
+
+```{r}
+#| label: modely-vyber
+#| echo: true
+
+# auto.arima(ts_data)
+# sarima_model <- auto.arima(ts_data, seasonal = TRUE)
+```
+
+## 6. Odhad modelů (AR, ARMA, ARIMA, SARIMA)
+
+```{r}
+#| label: modely-odhad
+#| echo: true
+
+# ar_model <- ar(ts_data)
+# arma_model <- arima(ts_data, order = c(1,0,1))
+# sarima_model <- arima(ts_data, order = c(1,1,1), seasonal = c(1,1,1))
+```
+
+## 7. Diagnostika modelů
+
+```{r}
+#| label: diagnostika
+#| echo: true
+
+# checkresiduals(arma_model)
+# tsdiag(arma_model)
+```
+
+## 8. Predikce
+
+```{r}
+#| label: predikce
+#| echo: true
+
+# forecast_arma <- forecast(arma_model, h = 12)
+# autoplot(forecast_arma)
+```
+
+---
+
+# Závěr
+
+## 1. Shrnutí výsledků
+
+- Shrnutí chování původní i transformované řady.
+- Porovnání přesnosti modelů (AIC, BIC, RMSE).
+- Vyhodnocení nejvhodnějšího modelu podle predikční schopnosti.
+
+## 2. Diskuze
+
+- Omezení modelu.
+- Možnosti vylepšení (delší řada, jiná frekvence, jiné transformace).
+
+## Závěrečné poznámky
+
+Projekt ukazuje postup od přípravy dat až po modelování a predikci pomocí metod ARIMA a jejich variant.
+
