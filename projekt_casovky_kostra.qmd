@@ -31,12 +31,14 @@ execute:
 if (!require(forecast)) install.packages("forecast", repos = "https://cloud.r-project.org")
 if (!require(zoo)) install.packages("zoo")
 if (!require(readr)) install.packages("readr", repos = "https://cloud.r-project.org")
+if (!require(tseries)) install.packages("tseries", repos = "https://cloud.r-project.org")
 library(readr)
 library(zoo)
 library(forecast)
 library(tseries)
 library(ggplot2)
 library(dplyr)
+library(tseries)
 ```
 
 ## 2. Načtení dat
@@ -53,19 +55,33 @@ head(data[c("month", "python", "r")])
 
 ## 3. Popis dat
 
+Použitý dataset obsahuje měsíční počty dotazů na StackOverflow od roku 2009 do roku 2020 pro různé programovací knihovny a technologie. Pro účely této analýzy se zaměřujeme pouze na dvě proměnné – Python a R, které reprezentují počet dotazů souvisejících s těmito jazyky v jednotlivých měsících.
+
+Nejprve jsme si zobrazili několik prvních pozorování datasetu, abychom se seznámili se strukturou dat a ověřili, že hodnoty odpovídají očekávanému formátu. Následně jsme vypočítali základní popisné statistiky pro obě časové řady.
+
+### Popisné statistiky - Python & R
 ```{r}
 #| label: popis-dat
 #| echo: true
 
 # Popisné statistiky
-summary(data[, c("month", "python", "r")])
+summary(data[, c("python", "r")])
 ```
+
+- Minimální počet dotazů je výrazně vyšší u Pythonu než u R.
+- Medián i průměr jsou u Pythonu několikanásobně vyšší než u R, což naznačuje dlouhodobě větší popularitu Pythonu.
+- Rozptyl hodnot je u Pythonu rovněž vyšší, což souvisí s rychlejším růstem zájmu v čase.
+- Maximální hodnoty ukazují, že Python dosahuje až téměř 24 000 dotazů za měsíc, zatímco R přibližně 5 100.
 
 ---
 
 # Analýza
 
 ## 1. Předběžný výzkum časové řady
+
+### Grafické zobrazení časových řad
+
+#### Python
 
 ```{r}
 #| label: vyzkum
@@ -81,19 +97,38 @@ r_ts <- ts(data$r,
            start = c(2009, 1),
            frequency = 12)
 
-par(mfrow = c(2,1))
-
 # Graf: Python
 plot(python_ts,
      main = "StackOverflow: dotazy k Pythonu",
      ylab = "počet dotazů za měsíc",
      xlab = "rok")
+```
 
+- Jasný rostoucí trend od roku 2009 do 2020.
+- Postupem času narůstá i variabilita počtu dotazů.
+- Viditelné pravidelné sezónní kolísání.
+
+#### R
+
+```{r}
+#| label: vyzkum_R
+#| echo: true
 # Graf: R
 plot(r_ts,
      main = "StackOverflow: dotazy k R",
      ylab = "počet dotazů za měsíc",
      xlab = "rok")
+```
+
+- Trend také roste, ale pomaleji a méně výrazně než u Pythonu.
+- Amplituda sezónnosti je menší.
+- Po roce 2017 se růst zpomaluje.
+
+#### Společný graf
+
+```{r}
+#| label: vyzkum_spolecny
+#| echo: true
 
 # Společný graf
 par(mfrow = c(1,1))
@@ -112,8 +147,16 @@ legend("topleft",
        bty = "n")
 ```
 
+- Python má výrazně větší počet dotazů a rychleji roste.
+- Od roku ~2014 se rozdíl ještě zvětšuje.
+- Oba jazyky mají podobný vzor sezónnosti.
+
+### Aditivní dekompozice
+
+#### Python
+
 ```{r}
-#| label: vyzkum_2
+#| label: vyzkum_3
 #| echo: true
 
 # Additivní dekompozice
@@ -121,47 +164,115 @@ legend("topleft",
 ## Python
 decomp_python <- decompose(python_ts, type = "additive")
 plot(decomp_python)
+```
 
+- **Trend**: silně rostoucí, plynulý.
+- **Sezónnost**: pravidelná, opakující se ročně.
+- **Remainder**: náhodné fluktuace bez jasné struktury.
+
+#### R
+
+```{r}
+#| label: vyzkum_4
+#| echo: true
 ## R
-decomp_r <- decompose(r_ts, type = "additive")
-plot(decomp_r)
+stl_r <- stl(r_ts, s.window = "periodic")
+plot(stl_r)
 ```
 
-## 2. Transformace časové řady
+- **Trend**: roste, ale méně než Python; kolem 2017 mírné zpomalení.
+- **Sezónnost**: také pravidelná a stabilní.
+- **Remainder**: náhodný šum bez výrazných anomálií.
+
+## 2. Testování stacionarity
+
+### Python
 
 ```{r}
-#| label: transformace
+#| label: stacionarita_python
 #| echo: true
-
-# log_ts <- log(ts_data)
-# sqrt_ts <- sqrt(ts_data)
-# par(mfrow = c(3,1))
-# plot(ts_data, main = "Původní řada")
-# plot(log_ts, main = "Log transformace")
-# plot(sqrt_ts, main = "Odmocnina")
+adf_python <- adf.test(python_ts)
+adf_python
 ```
 
-## 3. Testování stacionarity
+### R
 
 ```{r}
-#| label: stacionarita
+#| label: stacionarita_r
 #| echo: true
-
-# adf.test(ts_data)
-# adf.test(diff(ts_data))
+adf_r <- adf.test(r_ts)
+adf_r
 ```
 
-## 4. Autokorelace a parciální autokorelace
+### Python - diference
 
 ```{r}
-#| label: acf-pacf
+#| label: stacionarita_python_diff
 #| echo: true
-
-# acf(ts_data)
-# pacf(ts_data)
+adf_python_diff <- adf.test(diff(python_ts))
+adf_python_diff
 ```
 
-## 5. Výběr vhodných modelů
+### R - diference
+
+```{r}
+#| label: stacionarita_r_diff
+#| echo: true
+adf_r_diff  <- adf.test(diff(r_ts))
+adf_r_diff
+```
+
+**Shrnutí**:
+
+- Obě časové řady jsou nestacionární v původní podobě.
+- Důvodem je především rostoucí trend a možná sezónnost.
+- Obě řady se stávají stacionární po jedné diferenci.
+- Pro modelování ARIMA bude nutné řady diferencovat (parametr d = 1).
+
+## 3. Autokorelace a parciální autokorelace
+
+### Python
+
+```{r}
+#| label: acf-pacf_python
+#| echo: true
+
+par(mfrow = c(2,2))
+
+acf(python_ts, main = "ACF – Python")
+pacf(python_ts, main = "PACF – Python")
+
+acf(diff(python_ts), main = "ACF – diff(Python)")
+pacf(diff(python_ts), main = "PACF – diff(Python)")
+```
+
+
+### R
+
+```{r}
+#| label: acf-pacf_R
+#| echo: true
+
+par(mfrow = c(2,2))
+
+acf(r_ts, main = "ACF – R")
+pacf(r_ts, main = "PACF – R")
+
+acf(diff(r_ts), main = "ACF – diff(R)")
+pacf(diff(r_ts), main = "PACF – diff(R)")
+```
+
+- Trend také roste, ale pomaleji a méně výrazně než u Pythonu.
+- Amplituda sezónnosti je menší.
+- Po roce 2017 se růst zpomaluje.
+
+**Shrnutí**:
+
+- Původní řada: ACF pomalu klesá → nestacionární, potvrzuje trend.
+- Po diferenciaci: ACF má výrazný lag 1, PACF také → vhodné modely ARIMA(1,1,1) nebo blízké alternativy.
+
+
+## 4. Výběr vhodných modelů
 
 ```{r}
 #| label: modely-vyber
@@ -171,7 +282,7 @@ plot(decomp_r)
 # sarima_model <- auto.arima(ts_data, seasonal = TRUE)
 ```
 
-## 6. Odhad modelů (AR, ARMA, ARIMA, SARIMA)
+## 5. Odhad modelů (AR, ARMA, ARIMA, SARIMA)
 
 ```{r}
 #| label: modely-odhad
@@ -182,7 +293,7 @@ plot(decomp_r)
 # sarima_model <- arima(ts_data, order = c(1,1,1), seasonal = c(1,1,1))
 ```
 
-## 7. Diagnostika modelů
+## 6. Diagnostika modelů
 
 ```{r}
 #| label: diagnostika
@@ -192,7 +303,7 @@ plot(decomp_r)
 # tsdiag(arma_model)
 ```
 
-## 8. Predikce
+## 7. Predikce
 
 ```{r}
 #| label: predikce
