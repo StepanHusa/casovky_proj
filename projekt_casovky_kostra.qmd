@@ -29,6 +29,10 @@ execute:
 
 # Načtení potřebných balíčků
 if (!require(forecast)) install.packages("forecast", repos = "https://cloud.r-project.org")
+if (!require(zoo)) install.packages("zoo")
+if (!require(readr)) install.packages("readr", repos = "https://cloud.r-project.org")
+library(readr)
+library(zoo)
 library(forecast)
 library(tseries)
 library(ggplot2)
@@ -42,10 +46,10 @@ library(dplyr)
 #| echo: true
 
 # Načtení datasetu
- data <- read.csv("MLTollsStackOverflow.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
-# data$DATE <- as.Date(data$DATE)
-# head(data)
+data <- read_csv("MLTollsStackOverflow.csv")
+head(data[c("month", "python", "r")])
 ```
+
 
 ## 3. Popis dat
 
@@ -53,8 +57,8 @@ library(dplyr)
 #| label: popis-dat
 #| echo: true
 
-# summary(data)
-# plot(data$DATE, data$hodnota, type = "l", main = "Vývoj časové řady", xlab = "Datum", ylab = "Hodnota")
+# Popisné statistiky
+summary(data[, c("month", "python", "r")])
 ```
 
 ---
@@ -67,8 +71,60 @@ library(dplyr)
 #| label: vyzkum
 #| echo: true
 
-# ts_data <- ts(data$hodnota, start = c(1992, 1), frequency = 12)
-# plot(ts_data, main = "Časová řada", ylab = "Hodnota", xlab = "Čas")
+# Vytvoření časové řady: Python
+python_ts <- ts(data$python,
+                start = c(2009, 1),
+                frequency = 12)
+
+# Vytvoření časové řady: R
+r_ts <- ts(data$r,
+           start = c(2009, 1),
+           frequency = 12)
+
+par(mfrow = c(2,1))
+
+# Graf: Python
+plot(python_ts,
+     main = "StackOverflow: dotazy k Pythonu",
+     ylab = "počet dotazů za měsíc",
+     xlab = "rok")
+
+# Graf: R
+plot(r_ts,
+     main = "StackOverflow: dotazy k R",
+     ylab = "počet dotazů za měsíc",
+     xlab = "rok")
+
+# Společný graf
+par(mfrow = c(1,1))
+
+
+ts.plot(cbind(python_ts, r_ts),
+        col = c("blue", "red"),
+        lty = 1:2,
+        main = "Python vs R",
+        ylab = "Počet dotazů za měsíc")
+
+legend("topleft",
+       legend = c("Python", "R"),
+       col = c("blue", "red"),
+       lty = 1:2,
+       bty = "n")
+```
+
+```{r}
+#| label: vyzkum_2
+#| echo: true
+
+# Additivní dekompozice
+
+## Python
+decomp_python <- decompose(python_ts, type = "additive")
+plot(decomp_python)
+
+## R
+decomp_r <- decompose(r_ts, type = "additive")
+plot(decomp_r)
 ```
 
 ## 2. Transformace časové řady
