@@ -28,11 +28,11 @@ execute:
 #| echo: true
 
 # Načtení potřebných balíčků
-# if (!require(forecast)) install.packages("forecast", repos = "https://cloud.r-project.org")
-# library(forecast)
-# library(tseries)
-# library(ggplot2)
-# library(dplyr)
+if (!require(forecast)) install.packages("forecast", repos = "https://cloud.r-project.org")
+library(forecast)
+library(tseries)
+library(ggplot2)
+library(dplyr)
 ```
 
 ## 2. Načtení dat
@@ -42,7 +42,7 @@ execute:
 #| echo: true
 
 # Načtení datasetu
-# data <- read.csv("data.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+ data <- read.csv("MLTollsStackOverflow.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 # data$DATE <- as.Date(data$DATE)
 # head(data)
 ```
