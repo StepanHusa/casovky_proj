@@ -262,10 +262,6 @@ acf(diff(r_ts), main = "ACF – diff(R)")
 pacf(diff(r_ts), main = "PACF – diff(R)")
 ```
 
-- Trend také roste, ale pomaleji a méně výrazně než u Pythonu.
-- Amplituda sezónnosti je menší.
-- Po roce 2017 se růst zpomaluje.
-
 **Shrnutí**:
 
 - Původní řada: ACF pomalu klesá → nestacionární, potvrzuje trend.
