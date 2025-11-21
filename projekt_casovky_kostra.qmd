@@ -248,21 +248,6 @@ acf(diff(python_ts), main = "ACF – diff(Python)")
 pacf(diff(python_ts), main = "PACF – diff(Python)")
 ```
 
-### R
-
-```{r}
-#| label: acf-pacf_R
-#| echo: true
-
-par(mfrow = c(2,2))
-
-acf(r_ts, main = "ACF – R")
-pacf(r_ts, main = "PACF – R")
-
-acf(diff(r_ts), main = "ACF – diff(R)")
-pacf(diff(r_ts), main = "PACF – diff(R)")
-```
-
 **Shrnutí**:
 
 -   Původní řada: ACF pomalu klesá → nestacionární, potvrzuje trend.
@@ -470,10 +455,10 @@ forecast_log <- forecast(final_model, h = 12)
 
 # 2. Zpětná transformace (exp)
 forecast_orig <- forecast_log
-forecast_orig$mean <- exp(forecast_log$mean)
+forecast_orig$mean  <- exp(forecast_log$mean)
 forecast_orig$lower <- exp(forecast_log$lower)
 forecast_orig$upper <- exp(forecast_log$upper)
-forecast_orig$x <- exp(forecast_log$x)
+forecast_orig$x     <- exp(forecast_log$x)
 
 # 3. Vykreslení
 autoplot(forecast_orig) +
@@ -485,6 +470,43 @@ autoplot(forecast_orig) +
 
 # Výpis hodnot
 print(head(forecast_orig$mean, 12))
+```
+
+### Validace modelu – predikce posledních 24 měsíců
+
+Kromě predikce do budoucna je užitečné ověřit, jak dobře model dokáže
+zpětně předpovědět známá data. Proto odstraníme posledních 24 měsíců
+z časové řady, na zbytku znovu natrénujeme SARIMA model a následně
+se pokusíme predikovat právě těchto 6 měsíců.  
+
+Tuto „pseudo-predikci“ poté porovnáme se skutečnými hodnotami.  
+Pokud je model správně nastavený, měl by zachytit alespoň základní
+trend a sezónní průběh, i když krátkodobé výkyvy se mohou lišit.
+
+```{r}
+#| label: predikce_zpetna
+#| echo: true
+
+h <- 24  
+
+n <- length(python_log)
+python_log_train <- head(python_log, n - h)  
+python_log_test  <- tail(python_log, h)      
+
+# stejný typ modelu jako final_model, znovu odhadnutý na zkrácené řadě
+model_train <- Arima(python_log_train, model = final_model)
+
+# predikce posledníhch 2 let v logaritmech a zpětná transformace
+forecast_log_oos  <- forecast(model_train, h = h)
+forecast_oos_mean <- exp(forecast_log_oos$mean)
+
+# graf: celá řada + predikce posledních 2 let
+autoplot(exp(python_log)) +
+  autolayer(forecast_oos_mean, series = "Predikce posledních 2 let", size = 1) +
+  labs(title = "Validace modelu – predikce posledních 2 let",
+       y = "Počet dotazů",
+       x = "Rok") +
+  theme_minimal()
 ```
 
 ------------------------------------------------------------------------
