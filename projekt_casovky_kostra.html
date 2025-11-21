@@ -3391,18 +3391,20 @@ window.Quarto = {
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vytvoření časové řady: Python</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>python_ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(data<span class="sc">$</span>python,</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2009</span>, <span class="dv">1</span>),</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">frequency =</span> <span class="dv">12</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Vytvoření časové řady: R</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>r_ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(data<span class="sc">$</span>r,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2009</span>, <span class="dv">1</span>),</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">frequency =</span> <span class="dv">12</span>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Graf: Python</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(python_ts,</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;StackOverflow: dotazy k Pythonu&quot;</span>,</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;počet dotazů za měsíc&quot;</span>,</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;rok&quot;</span>)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                <span class="co">#end = c(2015, 12),</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Vytvoření časové řady: R</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>r_ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(data<span class="sc">$</span>r,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2009</span>, <span class="dv">1</span>),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>           <span class="co">#end = c(2015, 12),</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Graf: Python</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(python_ts,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;StackOverflow: dotazy k Pythonu&quot;</span>,</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;počet dotazů za měsíc&quot;</span>,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;rok&quot;</span>)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -3667,7 +3669,7 @@ alternative hypothesis: stationary</code></pre>
 </section>
 <section id="výběr-vhodných-modelů" class="level2">
 <h2 class="anchored" data-anchor-id="výběr-vhodných-modelů">4. Výběr vhodných modelů</h2>
-<p>Na základě předchozí analýzy ACF a PACF a dekompozice řady přistupujeme k manuální konstrukci modelu. Nejprve však data logaritmujeme, abychom stabilizovali rostoucí rozptyl (heteroskedasticitu), který jsme pozorovali v grafické analýze.Fragment kódu</p>
+<p>Na základě předchozí analýzy ACF a PACF a dekompozice řady přistupujeme k manuální konstrukci modelu. Zaměříme se přitom na časovou řadu dotazů na Python (R má velmi podobný průběh). Nejprve však data logaritmujeme, abychom stabilizovali rostoucí rozptyl (heteroskedasticitu), který jsme pozorovali v grafické analýze.Fragment kódu</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Kód</summary>
@@ -3723,19 +3725,6 @@ s.e.  0.0132   0.1003  0.1011  0.1784   0.1652
 sigma^2 = 0.003171:  log likelihood = 173.08
 AIC=-334.17   AICc=-333.42   BIC=-317.49</code></pre>
 </div>
-<details class="code-fold">
-<summary>Kód</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Intervaly spolehlivosti</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fit_manual)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>          2.5 %     97.5 %
-ar1   0.9676508  1.0193339
-ma1  -1.1563533 -0.7630092
-ma2  -0.1914215  0.2049825
-sar1 -0.1127633  0.5866839
-sma1 -1.0854635 -0.4379561</code></pre>
-</div>
 </div>
 <section id="kritická-analýza-jednotkové-kořeny-a-redundance" class="level3">
 <h3 class="anchored" data-anchor-id="kritická-analýza-jednotkové-kořeny-a-redundance">Kritická analýza: Jednotkové kořeny a redundance</h3>
@@ -3758,22 +3747,22 @@ sma1 -1.0854635 -0.4379561</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Kód</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Nový manuální model:</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># - p=0 (odstranili jsme AR kořen)</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># - d=2 (přidali jsme diferenci)</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># - q=2 (ponechali jsme z ACF)</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>fit_manual_d2 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(python_log, </span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">2</span>), </span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;=== MANUÁLNÍ MODEL S d=2 (0,2,2)(1,1,1) ===&quot;</span>)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Nový manuální model:</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># - p=0 (odstranili jsme AR kořen)</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># - d=2 (přidali jsme diferenci)</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># - q=2 (ponechali jsme z ACF)</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>fit_manual_d2 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(python_log, </span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">2</span>), </span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;=== MANUÁLNÍ MODEL S d=2 (0,2,2)(1,1,1) ===&quot;</span>)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot;=== MANUÁLNÍ MODEL S d=2 (0,2,2)(1,1,1) ===&quot;</code></pre>
 </div>
 <details class="code-fold">
 <summary>Kód</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_manual_d2)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_manual_d2)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: python_log 
@@ -3789,11 +3778,11 @@ AIC=-323.43   AICc=-322.89   BIC=-309.57</code></pre>
 </div>
 <details class="code-fold">
 <summary>Kód</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test významnosti parametrů nového modelu</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>t_stat_d2 <span class="ot">&lt;-</span> fit_manual_d2<span class="sc">$</span>coef <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(fit_manual_d2<span class="sc">$</span>var.coef))</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">data.frame</span>(<span class="at">Koeficient =</span> <span class="fu">names</span>(fit_manual_d2<span class="sc">$</span>coef), </span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">t_statistika =</span> t_stat_d2,</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Vyznamny =</span> <span class="fu">abs</span>(t_stat_d2) <span class="sc">&gt;</span> <span class="fl">1.96</span>))</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test významnosti parametrů nového modelu</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>t_stat_d2 <span class="ot">&lt;-</span> fit_manual_d2<span class="sc">$</span>coef <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(fit_manual_d2<span class="sc">$</span>var.coef))</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">data.frame</span>(<span class="at">Koeficient =</span> <span class="fu">names</span>(fit_manual_d2<span class="sc">$</span>coef), </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">t_statistika =</span> t_stat_d2,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Vyznamny =</span> <span class="fu">abs</span>(t_stat_d2) <span class="sc">&gt;</span> <span class="fl">1.96</span>))</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Koeficient t_statistika Vyznamny
@@ -3809,22 +3798,22 @@ sma1       sma1   -4.4767854     TRUE</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Kód</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finální manuální model (po redukci nevýznamných parametrů)</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Odstraňujeme ma2 (q=2 -&gt; q=1)</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Odstraňujeme sar1 (P=1 -&gt; P=0)</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Stále držíme d=2, protože to vyžaduje trend!</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>fit_manual_final <span class="ot">&lt;-</span> <span class="fu">Arima</span>(python_log, </span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">1</span>), </span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;=== FINÁLNÍ MANUÁLNÍ MODEL (0,2,1)(0,1,1) ===&quot;</span>)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finální manuální model (po redukci nevýznamných parametrů)</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Odstraňujeme ma2 (q=2 -&gt; q=1)</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Odstraňujeme sar1 (P=1 -&gt; P=0)</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Stále držíme d=2, protože to vyžaduje trend!</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>fit_manual_final <span class="ot">&lt;-</span> <span class="fu">Arima</span>(python_log, </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">1</span>), </span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;=== FINÁLNÍ MANUÁLNÍ MODEL (0,2,1)(0,1,1) ===&quot;</span>)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot;=== FINÁLNÍ MANUÁLNÍ MODEL (0,2,1)(0,1,1) ===&quot;</code></pre>
 </div>
 <details class="code-fold">
 <summary>Kód</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_manual_final)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_manual_final)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: python_log 
@@ -3840,8 +3829,8 @@ AIC=-325.82   AICc=-325.61   BIC=-317.51</code></pre>
 </div>
 <details class="code-fold">
 <summary>Kód</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finální kontrola reziduí</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">checkresiduals</span>(fit_manual_final)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finální kontrola reziduí</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">checkresiduals</span>(fit_manual_final)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -3859,46 +3848,23 @@ Q* = 61.51, df = 22, p-value = 1.332e-05
 
 Model df: 2.   Total lags used: 24</code></pre>
 </div>
-<details class="code-fold">
-<summary>Kód</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>lb_test_manual_final <span class="ot">&lt;-</span> <span class="fu">checkresiduals</span>(fit_manual_final, <span class="at">plot =</span> <span class="cn">FALSE</span>, <span class="at">lag =</span> <span class="dv">24</span>)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Ljung-Box test
-
-data:  Residuals from ARIMA(0,2,1)(0,1,1)[12]
-Q* = 61.51, df = 22, p-value = 1.332e-05
-
-Model df: 2.   Total lags used: 24</code></pre>
 </div>
-<details class="code-fold">
-<summary>Kód</summary>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(lb_test_manual_final)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Ljung-Box test
-
-data:  Residuals from ARIMA(0,2,1)(0,1,1)[12]
-Q* = 61.51, df = 22, p-value = 1.332e-05</code></pre>
-</div>
-</div>
-<p>Pro kontrolu správnosti našeho úsudku nyní necháme algoritmus auto.arima (který minimalizuje informační kritérium AICc), aby našel optimální model sám, a porovnáme ho s naším manuálně redukovaným modelem.</p>
+<p>Vidíme, že graficky výsledek sice vypadá jako bílý šum, ale box test i korelogram ukazují, že se nám model zvolit manuální nalýzou, tak aby byla residua bílý šum, nepodařilo. Je to dle našho manuálního pohledu nejlepší model který jsme mohli zvolit.<br>
+Pro kontrolu správnosti našeho úsudku nyní necháme algoritmus auto.arima (který minimalizuje informační kritérium AICc), aby našel optimální model sám, a porovnáme ho s naším manuálně redukovaným modelem.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Kód</summary>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Automatický návrh (s důrazem na prohledání prostoru)</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>fit_auto <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(python_log, <span class="at">seasonal =</span> <span class="cn">TRUE</span>, <span class="at">stepwise =</span> <span class="cn">FALSE</span>, <span class="at">approximation =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;=== AUTO ARIMA NÁVRH ===&quot;</span>)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Automatický návrh (s důrazem na prohledání prostoru)</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>fit_auto <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(python_log, <span class="at">seasonal =</span> <span class="cn">TRUE</span>, <span class="at">stepwise =</span> <span class="cn">FALSE</span>, <span class="at">approximation =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;=== AUTO ARIMA NÁVRH ===&quot;</span>)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot;=== AUTO ARIMA NÁVRH ===&quot;</code></pre>
 </div>
 <details class="code-fold">
 <summary>Kód</summary>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_auto)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_auto)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: python_log 
@@ -3914,13 +3880,13 @@ AIC=-351.72   AICc=-351.24   BIC=-337.38</code></pre>
 </div>
 <details class="code-fold">
 <summary>Kód</summary>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Srovnání AICc</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Pozor: Porovnáváme náš finální manuální model (fit_manual_final) s automatem</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>srovnani <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model =</span> <span class="fu">c</span>(<span class="st">&quot;Náš manuální (0,2,1)(0,1,1)&quot;</span>, <span class="st">&quot;Auto ARIMA návrh&quot;</span>),</span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">AICc =</span> <span class="fu">c</span>(fit_manual_final<span class="sc">$</span>aicc, fit_auto<span class="sc">$</span>aicc)</span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(srovnani)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Srovnání AICc</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Pozor: Porovnáváme náš finální manuální model (fit_manual_final) s automatem</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>srovnani <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model =</span> <span class="fu">c</span>(<span class="st">&quot;Náš manuální (0,2,1)(0,1,1)&quot;</span>, <span class="st">&quot;Auto ARIMA návrh&quot;</span>),</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">AICc =</span> <span class="fu">c</span>(fit_manual_final<span class="sc">$</span>aicc, fit_auto<span class="sc">$</span>aicc)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(srovnani)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                        Model      AICc
@@ -3928,19 +3894,19 @@ AIC=-351.72   AICc=-351.24   BIC=-337.38</code></pre>
 2            Auto ARIMA návrh -351.2357</code></pre>
 </div>
 </div>
-<p>Pokud auto.arima zvolila stejný model nebo model s velmi podobným AICc, potvrzuje to kvalitu naší manuální identifikace. Za finální model pro predikci volíme ten s nižším AICc (pravděpodobně náš redukovaný model nebo model shodný).</p>
+<p>Auto.arima zvolila jiný model s výrazně lepším AICc. Za finální model pro predikci volíme ten s nižším AICc .</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Kód</summary>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Výběr vítěze pro predikci</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Pokud je náš model srovnatelný (rozdíl AICc &lt; 2) nebo lepší, bereme náš.</span></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (fit_manual_final<span class="sc">$</span>aicc <span class="sc">&lt;</span> (fit_auto<span class="sc">$</span>aicc <span class="sc">+</span> <span class="dv">2</span>)) {</span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  final_model <span class="ot">&lt;-</span> fit_manual_final</span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Vítěz: Manuální model&quot;</span>)</span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>  final_model <span class="ot">&lt;-</span> fit_auto</span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Vítěz: Auto ARIMA&quot;</span>)</span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Výběr vítěze pro predikci</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Pokud je náš model srovnatelný (rozdíl AICc &lt; 2) nebo lepší, bereme náš.</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (fit_manual_final<span class="sc">$</span>aicc <span class="sc">&lt;</span> (fit_auto<span class="sc">$</span>aicc <span class="sc">+</span> <span class="dv">2</span>)) {</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  final_model <span class="ot">&lt;-</span> fit_manual_final</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Vítěz: Manuální model&quot;</span>)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  final_model <span class="ot">&lt;-</span> fit_auto</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Vítěz: Auto ARIMA&quot;</span>)</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot;Vítěz: Auto ARIMA&quot;</code></pre>
@@ -3958,8 +3924,8 @@ AIC=-351.72   AICc=-351.24   BIC=-337.38</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Kód</summary>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Grafická diagnostika</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">checkresiduals</span>(final_model)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Grafická diagnostika</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">checkresiduals</span>(final_model)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -3977,55 +3943,35 @@ Q* = 44.909, df = 20, p-value = 0.001135
 
 Model df: 4.   Total lags used: 24</code></pre>
 </div>
-<details class="code-fold">
-<summary>Kód</summary>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ljung-Boxův test nezávislosti reziduí</span></span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co"># H0: Rezidua jsou nezávislá (model je v pořádku)</span></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co"># H1: Rezidua jsou autokorelovaná</span></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>lb_test <span class="ot">&lt;-</span> <span class="fu">checkresiduals</span>(final_model, <span class="at">plot =</span> <span class="cn">FALSE</span>, <span class="at">lag =</span> <span class="dv">24</span>)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Ljung-Box test
-
-data:  Residuals from ARIMA(0,2,2)(2,0,0)[12]
-Q* = 44.909, df = 20, p-value = 0.001135
-
-Model df: 4.   Total lags used: 24</code></pre>
 </div>
-<details class="code-fold">
-<summary>Kód</summary>
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(lb_test)</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Ljung-Box test
-
-data:  Residuals from ARIMA(0,2,2)(2,0,0)[12]
-Q* = 44.909, df = 20, p-value = 0.001135</code></pre>
-</div>
-</div>
-<p>Vyhodnocení diagnostiky:Pokud je p-hodnota Ljung-Boxova testu <span class="math inline">\(&gt; 0.05\)</span>, nezamítáme nulovou hypotézu. To znamená, že model úspěšně zachytil veškerou strukturu v datech a rezidua jsou náhodná.7. PredikceProtože model vyhovuje diagnostickým testům, provedeme predikci na 12 měsíců dopředu. Je nutné provést zpětnou transformaci (exponenciálu), protože model pracoval s logaritmy.</p>
+<section id="vyhodnocení-diagnostiky" class="level4">
+<h4 class="anchored" data-anchor-id="vyhodnocení-diagnostiky">Vyhodnocení diagnostiky</h4>
+<p>Vidíme, že p-hodnota Ljung-Boxova testu není <span class="math inline">\(&gt; 0.05\)</span>, a zamítáme nulovou hypotézu. To znamená, že model nedokázal zachytil veškerou strukturu v datech a rezidua nejsou zcela náhodná.</p>
+<p>Ačkoliv Ljung-Boxův test zamítl hypotézu nezávislosti reziduí (p &lt; 0.05), vizuální kontrola a validace na testovacím vzorku ukazují, že model zachycuje hlavní dynamiku trendu a sezónnosti. Zbytková autokorelace je pravděpodobně způsobena strukturálním zlomem v popularitě Pythonu po roce 2017 nebo vysokým řádem diferenciace (<span class="math inline">\(d=2\)</span>), který byl nutný pro stacionarizaci. Model se však zdá dostatečně kvalitní a použijeme jej pro naši predikci.</p>
+</section>
+<section id="predikce" class="level4">
+<h4 class="anchored" data-anchor-id="predikce">Predikce</h4>
+<p>Provedeme predikci na 12 měsíců dopředu. Je nutné provést zpětnou transformaci (exponenciálu), protože model pracoval s logaritmy.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Kód</summary>
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Predikce v logaritmech</span></span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>forecast_log <span class="ot">&lt;-</span> <span class="fu">forecast</span>(final_model, <span class="at">h =</span> <span class="dv">12</span>)</span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Zpětná transformace (exp)</span></span>
-<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>forecast_orig <span class="ot">&lt;-</span> forecast_log</span>
-<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>forecast_orig<span class="sc">$</span>mean <span class="ot">&lt;-</span> <span class="fu">exp</span>(forecast_log<span class="sc">$</span>mean)</span>
-<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>forecast_orig<span class="sc">$</span>lower <span class="ot">&lt;-</span> <span class="fu">exp</span>(forecast_log<span class="sc">$</span>lower)</span>
-<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>forecast_orig<span class="sc">$</span>upper <span class="ot">&lt;-</span> <span class="fu">exp</span>(forecast_log<span class="sc">$</span>upper)</span>
-<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>forecast_orig<span class="sc">$</span>x <span class="ot">&lt;-</span> <span class="fu">exp</span>(forecast_log<span class="sc">$</span>x)</span>
-<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Vykreslení</span></span>
-<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(forecast_orig) <span class="sc">+</span></span>
-<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(forecast_orig<span class="sc">$</span>mean, <span class="at">series =</span> <span class="st">&quot;Predikce&quot;</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Predikce poptávky po Pythonu (SARIMA)&quot;</span>,</span>
-<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Počet dotazů&quot;</span>,</span>
-<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Rok&quot;</span>) <span class="sc">+</span></span>
-<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Predikce v logaritmech</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>forecast_log <span class="ot">&lt;-</span> <span class="fu">forecast</span>(final_model, <span class="at">h =</span> <span class="dv">12</span>)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Zpětná transformace (exp)</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>forecast_orig <span class="ot">&lt;-</span> forecast_log</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>forecast_orig<span class="sc">$</span>mean <span class="ot">&lt;-</span> <span class="fu">exp</span>(forecast_log<span class="sc">$</span>mean)</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>forecast_orig<span class="sc">$</span>lower <span class="ot">&lt;-</span> <span class="fu">exp</span>(forecast_log<span class="sc">$</span>lower)</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>forecast_orig<span class="sc">$</span>upper <span class="ot">&lt;-</span> <span class="fu">exp</span>(forecast_log<span class="sc">$</span>upper)</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>forecast_orig<span class="sc">$</span>x <span class="ot">&lt;-</span> <span class="fu">exp</span>(forecast_log<span class="sc">$</span>x)</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Vykreslení</span></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(forecast_orig) <span class="sc">+</span></span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(forecast_orig<span class="sc">$</span>mean, <span class="at">series =</span> <span class="st">&quot;Predikce&quot;</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Predikce poptávky po Pythonu (SARIMA)&quot;</span>,</span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Počet dotazů&quot;</span>,</span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Rok&quot;</span>) <span class="sc">+</span></span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -4036,8 +3982,8 @@ Q* = 44.909, df = 20, p-value = 0.001135</code></pre>
 </div>
 <details class="code-fold">
 <summary>Kód</summary>
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Výpis hodnot</span></span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(forecast_orig<span class="sc">$</span>mean, <span class="dv">12</span>))</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Výpis hodnot</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(forecast_orig<span class="sc">$</span>mean, <span class="dv">12</span>))</span></code><button title="Zkopírovat do schránky" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>          Jan      Feb      Mar      Apr      May      Jun      Jul      Aug
@@ -4049,22 +3995,18 @@ Q* = 44.909, df = 20, p-value = 0.001135</code></pre>
 <hr>
 </section>
 </section>
+</section>
 <section id="závěr" class="level1">
 <h1>Závěr</h1>
-<p>V této práci jsme analyzovali vývoj popularity jazyka Python na StackOverflow.Zjistili jsme silný rostoucí trend a sezónnost.Pomocí logaritmické transformace a diferencování jsme data stacionarizovali.Manuální analýzou koeficientů a srovnáním s automatickou selekcí jsme identifikovali jako nejvhodnější model SARIMA(1,1,1)(0,1,1)[12].Tento model prošel diagnostickými testy a byl použit k predikci, která očekává další růst zájmu s typickými sezónními výkyvy.</p>
+<p>V této práci jsme analyzovali vývoj popularity jazyka Python na StackOverflow.Zjistili jsme silný rostoucí trend a sezónnost.Pomocí logaritmické transformace a diferencování jsme data stacionarizovali.Manuální analýzou koeficientů a srovnáním s automatickou selekcí jsme identifikovali jako nejvhodnější model SARIMA(0,2,2)(2,0,0)[12].Tento model prošel diagnostickými testy a byl použit k predikci, která očekává další růst zájmu s typickými sezónními výkyvy.</p>
 <section id="shrnutí-výsledků" class="level2">
 <h2 class="anchored" data-anchor-id="shrnutí-výsledků">1. Shrnutí výsledků</h2>
-<ul>
-<li>Shrnutí chování původní i transformované řady.</li>
-<li>Porovnání přesnosti modelů (AIC, BIC, RMSE).</li>
-<li>Vyhodnocení nejvhodnějšího modelu podle predikční schopnosti.</li>
-</ul>
 </section>
 <section id="diskuze" class="level2">
 <h2 class="anchored" data-anchor-id="diskuze">2. Diskuze</h2>
 <ul>
-<li>Omezení modelu.</li>
-<li>Možnosti vylepšení (delší řada, jiná frekvence, jiné transformace).</li>
+<li><strong>Omezení modelu:</strong> Hlavním limitem modelu je zamítnutí hypotézy o nezávislosti reziduí (Ljung-Boxův test). To naznačuje, že model nedokázal plně absorbovat veškerou strukturu dat, pravděpodobně v důsledku strukturálního zlomu v popularitě Pythonu kolem roku 2017 a přítomnosti heteroskedasticity (změny rozptylu), kterou logaritmická transformace odstranila jen částečně. Model je tedy vhodný pro bodovou predikci trendu, ale intervaly spolehlivosti mohou být mírně podhodnocené.</li>
+<li><strong>Možnosti vylepšení:</strong> Přesnost modelu by mohla být zvýšena zkrácením časové řady (např. použitím dat pouze od roku 2015), čímž by se eliminoval vliv staršího, odlišného chování trendu. Dále by bylo možné využít pokročilejší modely odolné vůči strukturálním zlomům, jako je např. Prophet, nebo zahrnout exogenní proměnné (např. počet pracovních dní v měsíci).</li>
 </ul>
 </section>
 <section id="závěrečné-poznámky" class="level2">
@@ -4548,515 +4490,511 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Zdrojový kód</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class>
-<div class="sourceCode" id="cb61" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> &quot;Projekt do předmětu Časové řady I&quot;</span></span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> &quot;Michal Červenka, Martin Heger, Štěpán Husa&quot;</span></span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> &quot;2025-12-15&quot;</span></span>
-<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="an">lang:</span><span class="co"> cs</span></span>
-<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: default</span></span>
-<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
-<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 3</span></span>
-<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-title: &quot;Obsah&quot;</span></span>
-<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
-<span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a><span class="an">code-tools:</span><span class="co"> true</span></span>
-<span id="cb61-14"><a href="#cb61-14" aria-hidden="true" tabindex="-1"></a><span class="an">embed-resources:</span><span class="co"> true</span></span>
-<span id="cb61-15"><a href="#cb61-15" aria-hidden="true" tabindex="-1"></a><span class="an">fig-cap:</span><span class="co"> true</span></span>
-<span id="cb61-16"><a href="#cb61-16" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span></span>
-<span id="cb61-17"><a href="#cb61-17" aria-hidden="true" tabindex="-1"></a><span class="co">  echo: true</span></span>
-<span id="cb61-18"><a href="#cb61-18" aria-hidden="true" tabindex="-1"></a><span class="co">  warning: false</span></span>
-<span id="cb61-19"><a href="#cb61-19" aria-hidden="true" tabindex="-1"></a><span class="co">  message: false</span></span>
-<span id="cb61-20"><a href="#cb61-20" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb61-21"><a href="#cb61-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-22"><a href="#cb61-22" aria-hidden="true" tabindex="-1"></a><span class="fu"># Úvod</span></span>
-<span id="cb61-23"><a href="#cb61-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-24"><a href="#cb61-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Načtení knihoven</span></span>
-<span id="cb61-25"><a href="#cb61-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-28"><a href="#cb61-28" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-29"><a href="#cb61-29" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: knihovny</span></span>
-<span id="cb61-30"><a href="#cb61-30" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-31"><a href="#cb61-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-32"><a href="#cb61-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Načtení potřebných balíčků</span></span>
-<span id="cb61-33"><a href="#cb61-33" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(forecast)) <span class="fu">install.packages</span>(<span class="st">&quot;forecast&quot;</span>, <span class="at">repos =</span> <span class="st">&quot;https://cloud.r-project.org&quot;</span>)</span>
-<span id="cb61-34"><a href="#cb61-34" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(zoo)) <span class="fu">install.packages</span>(<span class="st">&quot;zoo&quot;</span>)</span>
-<span id="cb61-35"><a href="#cb61-35" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(readr)) <span class="fu">install.packages</span>(<span class="st">&quot;readr&quot;</span>, <span class="at">repos =</span> <span class="st">&quot;https://cloud.r-project.org&quot;</span>)</span>
-<span id="cb61-36"><a href="#cb61-36" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(tseries)) <span class="fu">install.packages</span>(<span class="st">&quot;tseries&quot;</span>, <span class="at">repos =</span> <span class="st">&quot;https://cloud.r-project.org&quot;</span>)</span>
-<span id="cb61-37"><a href="#cb61-37" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb61-38"><a href="#cb61-38" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(zoo)</span>
-<span id="cb61-39"><a href="#cb61-39" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
-<span id="cb61-40"><a href="#cb61-40" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
-<span id="cb61-41"><a href="#cb61-41" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb61-42"><a href="#cb61-42" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb61-43"><a href="#cb61-43" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
-<span id="cb61-44"><a href="#cb61-44" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-45"><a href="#cb61-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-46"><a href="#cb61-46" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Načtení dat</span></span>
-<span id="cb61-47"><a href="#cb61-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-50"><a href="#cb61-50" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-51"><a href="#cb61-51" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: data</span></span>
-<span id="cb61-52"><a href="#cb61-52" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-53"><a href="#cb61-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-54"><a href="#cb61-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Načtení datasetu</span></span>
-<span id="cb61-55"><a href="#cb61-55" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;MLTollsStackOverflow.csv&quot;</span>)</span>
-<span id="cb61-56"><a href="#cb61-56" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data[<span class="fu">c</span>(<span class="st">&quot;month&quot;</span>, <span class="st">&quot;python&quot;</span>, <span class="st">&quot;r&quot;</span>)])</span>
-<span id="cb61-57"><a href="#cb61-57" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-58"><a href="#cb61-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-59"><a href="#cb61-59" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Popis dat</span></span>
-<span id="cb61-60"><a href="#cb61-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-61"><a href="#cb61-61" aria-hidden="true" tabindex="-1"></a>Použitý dataset obsahuje měsíční počty dotazů na StackOverflow od roku 2009 do roku 2020 pro různé programovací knihovny a technologie. Pro účely této analýzy se zaměřujeme pouze na dvě proměnné – Python a R, které reprezentují počet dotazů souvisejících s těmito jazyky v jednotlivých měsících.</span>
-<span id="cb61-62"><a href="#cb61-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-63"><a href="#cb61-63" aria-hidden="true" tabindex="-1"></a>Nejprve jsme si zobrazili několik prvních pozorování datasetu, abychom se seznámili se strukturou dat a ověřili, že hodnoty odpovídají očekávanému formátu. Následně jsme vypočítali základní popisné statistiky pro obě časové řady.</span>
-<span id="cb61-64"><a href="#cb61-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-65"><a href="#cb61-65" aria-hidden="true" tabindex="-1"></a><span class="fu">### Popisné statistiky - Python &amp; R</span></span>
-<span id="cb61-66"><a href="#cb61-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-69"><a href="#cb61-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-70"><a href="#cb61-70" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: popis-dat</span></span>
-<span id="cb61-71"><a href="#cb61-71" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-72"><a href="#cb61-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-73"><a href="#cb61-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Popisné statistiky</span></span>
-<span id="cb61-74"><a href="#cb61-74" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data[, <span class="fu">c</span>(<span class="st">&quot;python&quot;</span>, <span class="st">&quot;r&quot;</span>)])</span>
-<span id="cb61-75"><a href="#cb61-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-76"><a href="#cb61-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-77"><a href="#cb61-77" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Minimální počet dotazů je výrazně vyšší u Pythonu než u R.</span>
-<span id="cb61-78"><a href="#cb61-78" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Medián i průměr jsou u Pythonu několikanásobně vyšší než u R, což naznačuje dlouhodobě větší popularitu Pythonu.</span>
-<span id="cb61-79"><a href="#cb61-79" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Rozptyl hodnot je u Pythonu rovněž vyšší, což souvisí s rychlejším růstem zájmu v čase.</span>
-<span id="cb61-80"><a href="#cb61-80" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Maximální hodnoty ukazují, že Python dosahuje až téměř 24 000 dotazů za měsíc, zatímco R přibližně 5 100.</span>
-<span id="cb61-81"><a href="#cb61-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-82"><a href="#cb61-82" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb61-83"><a href="#cb61-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-84"><a href="#cb61-84" aria-hidden="true" tabindex="-1"></a><span class="fu"># Analýza</span></span>
-<span id="cb61-85"><a href="#cb61-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-86"><a href="#cb61-86" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Předběžný výzkum časové řady</span></span>
-<span id="cb61-87"><a href="#cb61-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-88"><a href="#cb61-88" aria-hidden="true" tabindex="-1"></a><span class="fu">### Grafické zobrazení časových řad</span></span>
-<span id="cb61-89"><a href="#cb61-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-90"><a href="#cb61-90" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Python</span></span>
-<span id="cb61-91"><a href="#cb61-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-94"><a href="#cb61-94" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-95"><a href="#cb61-95" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: vyzkum</span></span>
-<span id="cb61-96"><a href="#cb61-96" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-97"><a href="#cb61-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-98"><a href="#cb61-98" aria-hidden="true" tabindex="-1"></a><span class="co"># Vytvoření časové řady: Python</span></span>
-<span id="cb61-99"><a href="#cb61-99" aria-hidden="true" tabindex="-1"></a>python_ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(data<span class="sc">$</span>python,</span>
-<span id="cb61-100"><a href="#cb61-100" aria-hidden="true" tabindex="-1"></a>                <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2009</span>, <span class="dv">1</span>),</span>
-<span id="cb61-101"><a href="#cb61-101" aria-hidden="true" tabindex="-1"></a>                <span class="at">frequency =</span> <span class="dv">12</span>)</span>
-<span id="cb61-102"><a href="#cb61-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-103"><a href="#cb61-103" aria-hidden="true" tabindex="-1"></a><span class="co"># Vytvoření časové řady: R</span></span>
-<span id="cb61-104"><a href="#cb61-104" aria-hidden="true" tabindex="-1"></a>r_ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(data<span class="sc">$</span>r,</span>
-<span id="cb61-105"><a href="#cb61-105" aria-hidden="true" tabindex="-1"></a>           <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2009</span>, <span class="dv">1</span>),</span>
-<span id="cb61-106"><a href="#cb61-106" aria-hidden="true" tabindex="-1"></a>           <span class="at">frequency =</span> <span class="dv">12</span>)</span>
-<span id="cb61-107"><a href="#cb61-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-108"><a href="#cb61-108" aria-hidden="true" tabindex="-1"></a><span class="co"># Graf: Python</span></span>
-<span id="cb61-109"><a href="#cb61-109" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(python_ts,</span>
-<span id="cb61-110"><a href="#cb61-110" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;StackOverflow: dotazy k Pythonu&quot;</span>,</span>
-<span id="cb61-111"><a href="#cb61-111" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;počet dotazů za měsíc&quot;</span>,</span>
-<span id="cb61-112"><a href="#cb61-112" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;rok&quot;</span>)</span>
-<span id="cb61-113"><a href="#cb61-113" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-114"><a href="#cb61-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-115"><a href="#cb61-115" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Jasný rostoucí trend od roku 2009 do 2020.</span>
-<span id="cb61-116"><a href="#cb61-116" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Postupem času narůstá i variabilita počtu dotazů.</span>
-<span id="cb61-117"><a href="#cb61-117" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Viditelné pravidelné sezónní kolísání.</span>
-<span id="cb61-118"><a href="#cb61-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-119"><a href="#cb61-119" aria-hidden="true" tabindex="-1"></a><span class="fu">#### R</span></span>
-<span id="cb61-120"><a href="#cb61-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-123"><a href="#cb61-123" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-124"><a href="#cb61-124" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: vyzkum_R</span></span>
-<span id="cb61-125"><a href="#cb61-125" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-126"><a href="#cb61-126" aria-hidden="true" tabindex="-1"></a><span class="co"># Graf: R</span></span>
-<span id="cb61-127"><a href="#cb61-127" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r_ts,</span>
-<span id="cb61-128"><a href="#cb61-128" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;StackOverflow: dotazy k R&quot;</span>,</span>
-<span id="cb61-129"><a href="#cb61-129" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;počet dotazů za měsíc&quot;</span>,</span>
-<span id="cb61-130"><a href="#cb61-130" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;rok&quot;</span>)</span>
-<span id="cb61-131"><a href="#cb61-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-132"><a href="#cb61-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-133"><a href="#cb61-133" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Trend také roste, ale pomaleji a méně výrazně než u Pythonu.</span>
-<span id="cb61-134"><a href="#cb61-134" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Amplituda sezónnosti je menší.</span>
-<span id="cb61-135"><a href="#cb61-135" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Po roce 2017 se růst zpomaluje.</span>
-<span id="cb61-136"><a href="#cb61-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-137"><a href="#cb61-137" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Společný graf</span></span>
-<span id="cb61-138"><a href="#cb61-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-141"><a href="#cb61-141" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-142"><a href="#cb61-142" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: vyzkum_spolecny</span></span>
-<span id="cb61-143"><a href="#cb61-143" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-144"><a href="#cb61-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-145"><a href="#cb61-145" aria-hidden="true" tabindex="-1"></a><span class="co"># Společný graf</span></span>
-<span id="cb61-146"><a href="#cb61-146" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb61-147"><a href="#cb61-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-148"><a href="#cb61-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-149"><a href="#cb61-149" aria-hidden="true" tabindex="-1"></a><span class="fu">ts.plot</span>(<span class="fu">cbind</span>(python_ts, r_ts),</span>
-<span id="cb61-150"><a href="#cb61-150" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>),</span>
-<span id="cb61-151"><a href="#cb61-151" aria-hidden="true" tabindex="-1"></a>        <span class="at">lty =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
-<span id="cb61-152"><a href="#cb61-152" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Python vs R&quot;</span>,</span>
-<span id="cb61-153"><a href="#cb61-153" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">&quot;Počet dotazů za měsíc&quot;</span>)</span>
-<span id="cb61-154"><a href="#cb61-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-155"><a href="#cb61-155" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>,</span>
-<span id="cb61-156"><a href="#cb61-156" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Python&quot;</span>, <span class="st">&quot;R&quot;</span>),</span>
-<span id="cb61-157"><a href="#cb61-157" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>),</span>
-<span id="cb61-158"><a href="#cb61-158" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
-<span id="cb61-159"><a href="#cb61-159" aria-hidden="true" tabindex="-1"></a>       <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>)</span>
-<span id="cb61-160"><a href="#cb61-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-161"><a href="#cb61-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-162"><a href="#cb61-162" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Python má výrazně větší počet dotazů a rychleji roste.</span>
-<span id="cb61-163"><a href="#cb61-163" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Od roku \~2014 se rozdíl ještě zvětšuje.</span>
-<span id="cb61-164"><a href="#cb61-164" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Oba jazyky mají podobný vzor sezónnosti.</span>
-<span id="cb61-165"><a href="#cb61-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-166"><a href="#cb61-166" aria-hidden="true" tabindex="-1"></a><span class="fu">### Aditivní dekompozice</span></span>
-<span id="cb61-167"><a href="#cb61-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-168"><a href="#cb61-168" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Python</span></span>
-<span id="cb61-169"><a href="#cb61-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-172"><a href="#cb61-172" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-173"><a href="#cb61-173" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: vyzkum_3</span></span>
-<span id="cb61-174"><a href="#cb61-174" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-175"><a href="#cb61-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-176"><a href="#cb61-176" aria-hidden="true" tabindex="-1"></a><span class="co"># Additivní dekompozice</span></span>
-<span id="cb61-177"><a href="#cb61-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-178"><a href="#cb61-178" aria-hidden="true" tabindex="-1"></a><span class="do">## Python</span></span>
-<span id="cb61-179"><a href="#cb61-179" aria-hidden="true" tabindex="-1"></a>decomp_python <span class="ot">&lt;-</span> <span class="fu">decompose</span>(python_ts, <span class="at">type =</span> <span class="st">&quot;additive&quot;</span>)</span>
-<span id="cb61-180"><a href="#cb61-180" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(decomp_python)</span>
-<span id="cb61-181"><a href="#cb61-181" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-182"><a href="#cb61-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-183"><a href="#cb61-183" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Trend**: silně rostoucí, plynulý.</span>
-<span id="cb61-184"><a href="#cb61-184" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Sezónnost**: pravidelná, opakující se ročně.</span>
-<span id="cb61-185"><a href="#cb61-185" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Remainder**: náhodné fluktuace bez jasné struktury.</span>
-<span id="cb61-186"><a href="#cb61-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-187"><a href="#cb61-187" aria-hidden="true" tabindex="-1"></a><span class="fu">#### R</span></span>
-<span id="cb61-188"><a href="#cb61-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-191"><a href="#cb61-191" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-192"><a href="#cb61-192" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: vyzkum_4</span></span>
-<span id="cb61-193"><a href="#cb61-193" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-194"><a href="#cb61-194" aria-hidden="true" tabindex="-1"></a><span class="do">## R</span></span>
-<span id="cb61-195"><a href="#cb61-195" aria-hidden="true" tabindex="-1"></a>stl_r <span class="ot">&lt;-</span> <span class="fu">stl</span>(r_ts, <span class="at">s.window =</span> <span class="st">&quot;periodic&quot;</span>)</span>
-<span id="cb61-196"><a href="#cb61-196" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(stl_r)</span>
-<span id="cb61-197"><a href="#cb61-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-198"><a href="#cb61-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-199"><a href="#cb61-199" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Trend**: roste, ale méně než Python; kolem 2017 mírné zpomalení.</span>
-<span id="cb61-200"><a href="#cb61-200" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Sezónnost**: také pravidelná a stabilní.</span>
-<span id="cb61-201"><a href="#cb61-201" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Remainder**: náhodný šum bez výrazných anomálií.</span>
-<span id="cb61-202"><a href="#cb61-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-203"><a href="#cb61-203" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Testování stacionarity</span></span>
-<span id="cb61-204"><a href="#cb61-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-205"><a href="#cb61-205" aria-hidden="true" tabindex="-1"></a><span class="fu">### Python</span></span>
-<span id="cb61-206"><a href="#cb61-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-209"><a href="#cb61-209" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-210"><a href="#cb61-210" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: stacionarita_python</span></span>
-<span id="cb61-211"><a href="#cb61-211" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-212"><a href="#cb61-212" aria-hidden="true" tabindex="-1"></a>adf_python <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(python_ts)</span>
-<span id="cb61-213"><a href="#cb61-213" aria-hidden="true" tabindex="-1"></a>adf_python</span>
-<span id="cb61-214"><a href="#cb61-214" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-215"><a href="#cb61-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-216"><a href="#cb61-216" aria-hidden="true" tabindex="-1"></a><span class="fu">### R</span></span>
-<span id="cb61-217"><a href="#cb61-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-220"><a href="#cb61-220" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-221"><a href="#cb61-221" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: stacionarita_r</span></span>
-<span id="cb61-222"><a href="#cb61-222" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-223"><a href="#cb61-223" aria-hidden="true" tabindex="-1"></a>adf_r <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(r_ts)</span>
-<span id="cb61-224"><a href="#cb61-224" aria-hidden="true" tabindex="-1"></a>adf_r</span>
-<span id="cb61-225"><a href="#cb61-225" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-226"><a href="#cb61-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-227"><a href="#cb61-227" aria-hidden="true" tabindex="-1"></a><span class="fu">### Python - diference</span></span>
-<span id="cb61-228"><a href="#cb61-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-231"><a href="#cb61-231" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-232"><a href="#cb61-232" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: stacionarita_python_diff</span></span>
-<span id="cb61-233"><a href="#cb61-233" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-234"><a href="#cb61-234" aria-hidden="true" tabindex="-1"></a>adf_python_diff <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(<span class="fu">diff</span>(python_ts))</span>
-<span id="cb61-235"><a href="#cb61-235" aria-hidden="true" tabindex="-1"></a>adf_python_diff</span>
-<span id="cb61-236"><a href="#cb61-236" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-237"><a href="#cb61-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-238"><a href="#cb61-238" aria-hidden="true" tabindex="-1"></a><span class="fu">### R - diference</span></span>
-<span id="cb61-239"><a href="#cb61-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-242"><a href="#cb61-242" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-243"><a href="#cb61-243" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: stacionarita_r_diff</span></span>
-<span id="cb61-244"><a href="#cb61-244" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-245"><a href="#cb61-245" aria-hidden="true" tabindex="-1"></a>adf_r_diff  <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(<span class="fu">diff</span>(r_ts))</span>
-<span id="cb61-246"><a href="#cb61-246" aria-hidden="true" tabindex="-1"></a>adf_r_diff</span>
-<span id="cb61-247"><a href="#cb61-247" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-248"><a href="#cb61-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-249"><a href="#cb61-249" aria-hidden="true" tabindex="-1"></a>**Shrnutí**:</span>
-<span id="cb61-250"><a href="#cb61-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-251"><a href="#cb61-251" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Obě časové řady jsou nestacionární v původní podobě.</span>
-<span id="cb61-252"><a href="#cb61-252" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Důvodem je především rostoucí trend a možná sezónnost.</span>
-<span id="cb61-253"><a href="#cb61-253" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Obě řady se stávají stacionární po jedné diferenci.</span>
-<span id="cb61-254"><a href="#cb61-254" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Pro modelování ARIMA bude nutné řady diferencovat (parametr d = 1).</span>
-<span id="cb61-255"><a href="#cb61-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-256"><a href="#cb61-256" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Autokorelace a parciální autokorelace</span></span>
-<span id="cb61-257"><a href="#cb61-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-258"><a href="#cb61-258" aria-hidden="true" tabindex="-1"></a><span class="fu">### Python</span></span>
-<span id="cb61-259"><a href="#cb61-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-262"><a href="#cb61-262" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-263"><a href="#cb61-263" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: acf-pacf_python</span></span>
-<span id="cb61-264"><a href="#cb61-264" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-265"><a href="#cb61-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-266"><a href="#cb61-266" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb61-267"><a href="#cb61-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-268"><a href="#cb61-268" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(python_ts, <span class="at">main =</span> <span class="st">&quot;ACF – Python&quot;</span>)</span>
-<span id="cb61-269"><a href="#cb61-269" aria-hidden="true" tabindex="-1"></a><span class="fu">pacf</span>(python_ts, <span class="at">main =</span> <span class="st">&quot;PACF – Python&quot;</span>)</span>
-<span id="cb61-270"><a href="#cb61-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-271"><a href="#cb61-271" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">diff</span>(python_ts), <span class="at">main =</span> <span class="st">&quot;ACF – diff(Python)&quot;</span>)</span>
-<span id="cb61-272"><a href="#cb61-272" aria-hidden="true" tabindex="-1"></a><span class="fu">pacf</span>(<span class="fu">diff</span>(python_ts), <span class="at">main =</span> <span class="st">&quot;PACF – diff(Python)&quot;</span>)</span>
-<span id="cb61-273"><a href="#cb61-273" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-274"><a href="#cb61-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-275"><a href="#cb61-275" aria-hidden="true" tabindex="-1"></a><span class="fu">### R</span></span>
-<span id="cb61-276"><a href="#cb61-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-279"><a href="#cb61-279" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-280"><a href="#cb61-280" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: acf-pacf_R</span></span>
-<span id="cb61-281"><a href="#cb61-281" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-282"><a href="#cb61-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-283"><a href="#cb61-283" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb61-284"><a href="#cb61-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-285"><a href="#cb61-285" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(r_ts, <span class="at">main =</span> <span class="st">&quot;ACF – R&quot;</span>)</span>
-<span id="cb61-286"><a href="#cb61-286" aria-hidden="true" tabindex="-1"></a><span class="fu">pacf</span>(r_ts, <span class="at">main =</span> <span class="st">&quot;PACF – R&quot;</span>)</span>
-<span id="cb61-287"><a href="#cb61-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-288"><a href="#cb61-288" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">diff</span>(r_ts), <span class="at">main =</span> <span class="st">&quot;ACF – diff(R)&quot;</span>)</span>
-<span id="cb61-289"><a href="#cb61-289" aria-hidden="true" tabindex="-1"></a><span class="fu">pacf</span>(<span class="fu">diff</span>(r_ts), <span class="at">main =</span> <span class="st">&quot;PACF – diff(R)&quot;</span>)</span>
-<span id="cb61-290"><a href="#cb61-290" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-291"><a href="#cb61-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-292"><a href="#cb61-292" aria-hidden="true" tabindex="-1"></a>**Shrnutí**:</span>
-<span id="cb61-293"><a href="#cb61-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-294"><a href="#cb61-294" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Původní řada: ACF pomalu klesá → nestacionární, potvrzuje trend.</span>
-<span id="cb61-295"><a href="#cb61-295" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Po diferenciaci: ACF má výrazný lag 1, PACF také → vhodné modely ARIMA(1,1,1) nebo blízké alternativy.</span>
-<span id="cb61-296"><a href="#cb61-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-297"><a href="#cb61-297" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4. Výběr vhodných modelů</span></span>
-<span id="cb61-298"><a href="#cb61-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-299"><a href="#cb61-299" aria-hidden="true" tabindex="-1"></a>Na základě předchozí analýzy ACF a PACF a dekompozice řady přistupujeme k manuální konstrukci modelu. Nejprve však data logaritmujeme, abychom stabilizovali rostoucí rozptyl (heteroskedasticitu), který jsme pozorovali v grafické analýze.Fragment kódu</span>
-<span id="cb61-300"><a href="#cb61-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-303"><a href="#cb61-303" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-304"><a href="#cb61-304" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: log-transformace</span></span>
-<span id="cb61-305"><a href="#cb61-305" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-306"><a href="#cb61-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-307"><a href="#cb61-307" aria-hidden="true" tabindex="-1"></a><span class="co"># Logaritmická transformace pro stabilizaci rozptylu</span></span>
-<span id="cb61-308"><a href="#cb61-308" aria-hidden="true" tabindex="-1"></a>python_log <span class="ot">&lt;-</span> <span class="fu">log</span>(python_ts)</span>
-<span id="cb61-309"><a href="#cb61-309" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-310"><a href="#cb61-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-311"><a href="#cb61-311" aria-hidden="true" tabindex="-1"></a>**Odůvodnění volby parametrů modelu SARIMA**</span>
-<span id="cb61-312"><a href="#cb61-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-313"><a href="#cb61-313" aria-hidden="true" tabindex="-1"></a>Naše vizuální analýza ACF a PACF (po diferenciaci) ukázala významné hodnoty na lagu 1,2 (a to záporné) a na sezónním lagu 12. To nás vede k následující volbě parametrů pro výchozí model SARIMA(p,d,q)(P,D,Q)<span class="sc">\[</span>12<span class="sc">\]</span>:</span>
-<span id="cb61-314"><a href="#cb61-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-315"><a href="#cb61-315" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Trend (**$d=1$):</span>
-<span id="cb61-316"><a href="#cb61-316" aria-hidden="true" tabindex="-1"></a>    Původní časová řada vykazovala jasný rostoucí trend a nestacionaritu. Aplikace první diference vedla k odstranění nestacionarity, což potvrdil Augmented Dickey-Fullerův test (p-hodnota $&lt; 0.01$).</span>
-<span id="cb61-317"><a href="#cb61-317" aria-hidden="true" tabindex="-1"></a>    Navíc graf ACF diferencované řady ukazuje na lagu 1 a 2 významné záporné hodnoty. Tento jev je v literatuře považován za varovný signál proti dalšímu diferencování (riziko tzv. *over-differencing*). Na základě těchto statistických i vizuálních testů proto fixujeme řád diferenciace na **\$d=1\$**.</span>
-<span id="cb61-318"><a href="#cb61-318" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-319"><a href="#cb61-319" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Sezónnost (**$D=1, s=12$):</span>
-<span id="cb61-320"><a href="#cb61-320" aria-hidden="true" tabindex="-1"></a>    Časová řada vykazuje zřetelnou roční cykličnost. Klíčovým indikátorem je statisticky významná kladná hodnota autokorelační funkce (ACF) na lagu 12, která přetrvává i po provedení první diference. Tento vzor indikuje přítomnost tzv. stochastické sezónnosti, kterou je nutné modelovat aplikací sezónní diference ($D=1$) s periodou $s=12$.</span>
-<span id="cb61-321"><a href="#cb61-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-322"><a href="#cb61-322" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Nesezónní struktura (\$p=1, q=2\$):</span>
-<span id="cb61-323"><a href="#cb61-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-324"><a href="#cb61-324" aria-hidden="true" tabindex="-1"></a>    Rozhodování o řádech AR a MA vychází z chování autokorelačních funkcí.</span>
-<span id="cb61-325"><a href="#cb61-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-326"><a href="#cb61-326" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**MA část (**$q=2$): Graf ACF vykazuje na prvních dvou lazích statisticky významné záporné hodnoty, po kterých následuje pokles do pásma nevýznamnosti (useknutí). Tento vzor je charakteristický pro proces klouzavých průměrů druhého řádu ($q=2$).</span>
-<span id="cb61-327"><a href="#cb61-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-328"><a href="#cb61-328" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**AR část (**$p=1$): Graf parciální autokorelace (PACF) nevykazuje ostré useknutí po prvním lagu, ale spíše pozvolnější doznívání, což naznačuje, že čistý MA model by nemusel být dostačující. Proto volíme smíšený model a přidáváme autoregresní člen prvního řádu ($p=1$), abychom zachytili případnou setrvačnost časové řady.</span>
-<span id="cb61-329"><a href="#cb61-329" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-330"><a href="#cb61-330" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Sezónní struktura (**$P=1, Q=1$):</span>
-<span id="cb61-331"><a href="#cb61-331" aria-hidden="true" tabindex="-1"></a>    Na sezónních lazích (zejména lag 12) pozorujeme v grafech autokorelačních funkcí statisticky významné hodnoty. Vzhledem k tomu, že jednoznačná identifikace čistého sezónního AR nebo MA procesu je vizuálně obtížná, volíme pro startovací model smíšenou strukturu. Zahrnujeme tedy sezónní autoregresní člen ($P=1$) i sezónní klouzavý průměr ($Q=1$), abychom zachytili komplexní vazby mezi stejnými měsíci v po sobě jdoucích letech.</span>
-<span id="cb61-332"><a href="#cb61-332" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-333"><a href="#cb61-333" aria-hidden="true" tabindex="-1"></a>Tímto postupem získáváme startovací model SARIMA(1,1,2)(1,1,1)<span class="sc">\[</span>12<span class="sc">\]</span>.</span>
-<span id="cb61-334"><a href="#cb61-334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-335"><a href="#cb61-335" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5. Odhad a optimalizace modelů</span></span>
-<span id="cb61-336"><a href="#cb61-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-337"><a href="#cb61-337" aria-hidden="true" tabindex="-1"></a>Nyní tento model odhadneme a provedeme testování statistické významnosti jeho koeficientů. Naším cílem je najít nejjednodušší možný model , proto zkontrolujeme, zda jsou všechny parametry skutečně potřeba.</span>
-<span id="cb61-338"><a href="#cb61-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-341"><a href="#cb61-341" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-342"><a href="#cb61-342" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: odhad-startovaci</span></span>
-<span id="cb61-343"><a href="#cb61-343" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-344"><a href="#cb61-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-345"><a href="#cb61-345" aria-hidden="true" tabindex="-1"></a><span class="co"># Odhad modelu SARIMA(1,1,2)(1,1,1)[12]</span></span>
-<span id="cb61-346"><a href="#cb61-346" aria-hidden="true" tabindex="-1"></a><span class="co"># Volba q=2 vychází z pozorování ACF (lag 1, 2)</span></span>
-<span id="cb61-347"><a href="#cb61-347" aria-hidden="true" tabindex="-1"></a>fit_manual <span class="ot">&lt;-</span> <span class="fu">Arima</span>(python_log, </span>
-<span id="cb61-348"><a href="#cb61-348" aria-hidden="true" tabindex="-1"></a>                    <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>), </span>
-<span id="cb61-349"><a href="#cb61-349" aria-hidden="true" tabindex="-1"></a>                    <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb61-350"><a href="#cb61-350" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-351"><a href="#cb61-351" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;=== ANALÝZA KOEFICIENTŮ (Startovací model) ===&quot;</span>)</span>
-<span id="cb61-352"><a href="#cb61-352" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_manual)</span>
-<span id="cb61-353"><a href="#cb61-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-354"><a href="#cb61-354" aria-hidden="true" tabindex="-1"></a><span class="co"># Intervaly spolehlivosti</span></span>
-<span id="cb61-355"><a href="#cb61-355" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fit_manual)</span>
-<span id="cb61-356"><a href="#cb61-356" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-357"><a href="#cb61-357" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-358"><a href="#cb61-358" aria-hidden="true" tabindex="-1"></a><span class="fu">### Kritická analýza: Jednotkové kořeny a redundance</span></span>
-<span id="cb61-359"><a href="#cb61-359" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-360"><a href="#cb61-360" aria-hidden="true" tabindex="-1"></a>Při pohledu na odhadnuté parametry narážíme na závažný strukturální problém, který indikuje špatnou specifikaci řádu diferenciace.</span>
-<span id="cb61-361"><a href="#cb61-361" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-362"><a href="#cb61-362" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**AR část (Jednotkový kořen):** Parametr **ar1** dosahuje hodnoty **0.9935**. To indikuje nestacionaritu a snahu modelu suplovat chybějící diferenciaci ($Y_t - Y_{t-1}$).</span>
-<span id="cb61-363"><a href="#cb61-363" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-364"><a href="#cb61-364" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**MA část (Hranice invertibility):** Současně parametr **ma1** dosahuje hodnoty **-0.9597**, což je velmi blízko hranice invertibility (-1).</span>
-<span id="cb61-365"><a href="#cb61-365" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-366"><a href="#cb61-366" aria-hidden="true" tabindex="-1"></a>Tato situace, kdy mají AR a MA kořeny téměř shodnou absolutní hodnotu, ale opačný vliv, se nazývá **redundance parametrů** (parameter cancellation). Model je nestabilní, protože AR a MA složky se vzájemně &quot;perou&quot; – AR složka se snaží trend vytvořit, zatímco silná MA složka se ho snaží kompenzovat.</span>
-<span id="cb61-367"><a href="#cb61-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-368"><a href="#cb61-368" aria-hidden="true" tabindex="-1"></a>Závěr:</span>
-<span id="cb61-369"><a href="#cb61-369" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-370"><a href="#cb61-370" aria-hidden="true" tabindex="-1"></a>Jediným čistým řešením této patové situace je zvýšení řádu diferenciace na \$d=2\$. Tím se jednotkový kořen z AR části &quot;vyjme&quot; a převede se na pevnou součást modelu (druhou diferenci), čímž se uvolní napětí v parametrech a model se stane stabilním.</span>
-<span id="cb61-371"><a href="#cb61-371" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-372"><a href="#cb61-372" aria-hidden="true" tabindex="-1"></a>Jelikož se parametr <span class="in">`ar1`</span> choval jako diference, provedeme tuto změnu explicitně:</span>
-<span id="cb61-373"><a href="#cb61-373" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-374"><a href="#cb61-374" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Zvýšíme řád diferenciace z $d=1$ na $d=2$.</span>
-<span id="cb61-375"><a href="#cb61-375" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-376"><a href="#cb61-376" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Vyloučíme problematický autoregresní člen (snížíme $p$ z 1 na 0), protože jeho roli převzala druhá diference.</span>
-<span id="cb61-377"><a href="#cb61-377" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-378"><a href="#cb61-378" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Strukturu klouzavých průměrů ($q=2$), kterou jsme odvodili z grafu ACF (záporné lagy), ponecháme.</span>
-<span id="cb61-379"><a href="#cb61-379" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-380"><a href="#cb61-380" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>Sezónní část ponecháme v původním nastavení $(1,1,1)$, abychom zachovali konzistenci.</span>
-<span id="cb61-381"><a href="#cb61-381" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-382"><a href="#cb61-382" aria-hidden="true" tabindex="-1"></a>Definujeme tedy nový manuální model: $SARIMA(0,2,2)(1,1,1)_{12}$.</span>
-<span id="cb61-383"><a href="#cb61-383" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-384"><a href="#cb61-384" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-385"><a href="#cb61-385" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-388"><a href="#cb61-388" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-389"><a href="#cb61-389" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: odhad-manual-d2</span></span>
-<span id="cb61-390"><a href="#cb61-390" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-391"><a href="#cb61-391" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-392"><a href="#cb61-392" aria-hidden="true" tabindex="-1"></a><span class="co"># Nový manuální model:</span></span>
-<span id="cb61-393"><a href="#cb61-393" aria-hidden="true" tabindex="-1"></a><span class="co"># - p=0 (odstranili jsme AR kořen)</span></span>
-<span id="cb61-394"><a href="#cb61-394" aria-hidden="true" tabindex="-1"></a><span class="co"># - d=2 (přidali jsme diferenci)</span></span>
-<span id="cb61-395"><a href="#cb61-395" aria-hidden="true" tabindex="-1"></a><span class="co"># - q=2 (ponechali jsme z ACF)</span></span>
-<span id="cb61-396"><a href="#cb61-396" aria-hidden="true" tabindex="-1"></a>fit_manual_d2 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(python_log, </span>
-<span id="cb61-397"><a href="#cb61-397" aria-hidden="true" tabindex="-1"></a>                       <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">2</span>), </span>
-<span id="cb61-398"><a href="#cb61-398" aria-hidden="true" tabindex="-1"></a>                       <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb61-399"><a href="#cb61-399" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-400"><a href="#cb61-400" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;=== MANUÁLNÍ MODEL S d=2 (0,2,2)(1,1,1) ===&quot;</span>)</span>
-<span id="cb61-401"><a href="#cb61-401" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_manual_d2)</span>
-<span id="cb61-402"><a href="#cb61-402" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-403"><a href="#cb61-403" aria-hidden="true" tabindex="-1"></a><span class="co"># Test významnosti parametrů nového modelu</span></span>
-<span id="cb61-404"><a href="#cb61-404" aria-hidden="true" tabindex="-1"></a>t_stat_d2 <span class="ot">&lt;-</span> fit_manual_d2<span class="sc">$</span>coef <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(fit_manual_d2<span class="sc">$</span>var.coef))</span>
-<span id="cb61-405"><a href="#cb61-405" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">data.frame</span>(<span class="at">Koeficient =</span> <span class="fu">names</span>(fit_manual_d2<span class="sc">$</span>coef), </span>
-<span id="cb61-406"><a href="#cb61-406" aria-hidden="true" tabindex="-1"></a>                 <span class="at">t_statistika =</span> t_stat_d2,</span>
-<span id="cb61-407"><a href="#cb61-407" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Vyznamny =</span> <span class="fu">abs</span>(t_stat_d2) <span class="sc">&gt;</span> <span class="fl">1.96</span>))</span>
-<span id="cb61-408"><a href="#cb61-408" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-409"><a href="#cb61-409" aria-hidden="true" tabindex="-1"></a>Analýza statistické významnosti parametrů modelu $SARIMA(0,2,2)(1,1,1)_{12}$ odhalila možnosti pro další zjednodušení:</span>
-<span id="cb61-410"><a href="#cb61-410" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-411"><a href="#cb61-411" aria-hidden="true" tabindex="-1"></a>Parametr ma2: T-statistika indikuje nevýznamnost ($0.15 &lt; 1.96$). Ačkoliv vizuální analýza původně naznačovala potřebu druhého řádu MA, silnější diferenciace ($d=2$) pravděpodobně změnila autokorelační strukturu reziduí natolik, že druhý lag již není nutné explicitně modelovat.Parametr sar1: Sezónní autoregresní složka se opět ukázala jako nadbytečná (t-statistika 1.24).</span>
-<span id="cb61-412"><a href="#cb61-412" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-413"><a href="#cb61-413" aria-hidden="true" tabindex="-1"></a>V souladu s touto nalýzou tyto parametry odstraňujeme a definujeme náš finální manuální model ve tvaru $SARIMA(0,2,1)(0,1,1)_{12}$.</span>
-<span id="cb61-414"><a href="#cb61-414" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-417"><a href="#cb61-417" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-418"><a href="#cb61-418" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: final-manual-optimalized</span></span>
-<span id="cb61-419"><a href="#cb61-419" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-420"><a href="#cb61-420" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-421"><a href="#cb61-421" aria-hidden="true" tabindex="-1"></a><span class="co"># Finální manuální model (po redukci nevýznamných parametrů)</span></span>
-<span id="cb61-422"><a href="#cb61-422" aria-hidden="true" tabindex="-1"></a><span class="co"># Odstraňujeme ma2 (q=2 -&gt; q=1)</span></span>
-<span id="cb61-423"><a href="#cb61-423" aria-hidden="true" tabindex="-1"></a><span class="co"># Odstraňujeme sar1 (P=1 -&gt; P=0)</span></span>
-<span id="cb61-424"><a href="#cb61-424" aria-hidden="true" tabindex="-1"></a><span class="co"># Stále držíme d=2, protože to vyžaduje trend!</span></span>
-<span id="cb61-425"><a href="#cb61-425" aria-hidden="true" tabindex="-1"></a>fit_manual_final <span class="ot">&lt;-</span> <span class="fu">Arima</span>(python_log, </span>
-<span id="cb61-426"><a href="#cb61-426" aria-hidden="true" tabindex="-1"></a>                          <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">1</span>), </span>
-<span id="cb61-427"><a href="#cb61-427" aria-hidden="true" tabindex="-1"></a>                          <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb61-428"><a href="#cb61-428" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-429"><a href="#cb61-429" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;=== FINÁLNÍ MANUÁLNÍ MODEL (0,2,1)(0,1,1) ===&quot;</span>)</span>
-<span id="cb61-430"><a href="#cb61-430" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_manual_final)</span>
-<span id="cb61-431"><a href="#cb61-431" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-432"><a href="#cb61-432" aria-hidden="true" tabindex="-1"></a><span class="co"># Finální kontrola reziduí</span></span>
-<span id="cb61-433"><a href="#cb61-433" aria-hidden="true" tabindex="-1"></a><span class="fu">checkresiduals</span>(fit_manual_final)</span>
-<span id="cb61-434"><a href="#cb61-434" aria-hidden="true" tabindex="-1"></a>lb_test_manual_final <span class="ot">&lt;-</span> <span class="fu">checkresiduals</span>(fit_manual_final, <span class="at">plot =</span> <span class="cn">FALSE</span>, <span class="at">lag =</span> <span class="dv">24</span>)</span>
-<span id="cb61-435"><a href="#cb61-435" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(lb_test_manual_final)</span>
-<span id="cb61-436"><a href="#cb61-436" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-437"><a href="#cb61-437" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-438"><a href="#cb61-438" aria-hidden="true" tabindex="-1"></a>Pro kontrolu správnosti našeho úsudku nyní necháme algoritmus auto.arima (který minimalizuje informační kritérium AICc), aby našel optimální model sám, a porovnáme ho s naším manuálně redukovaným modelem.</span>
-<span id="cb61-439"><a href="#cb61-439" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-442"><a href="#cb61-442" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-443"><a href="#cb61-443" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: porovnani-auto</span></span>
-<span id="cb61-444"><a href="#cb61-444" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-445"><a href="#cb61-445" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-446"><a href="#cb61-446" aria-hidden="true" tabindex="-1"></a><span class="co"># Automatický návrh (s důrazem na prohledání prostoru)</span></span>
-<span id="cb61-447"><a href="#cb61-447" aria-hidden="true" tabindex="-1"></a>fit_auto <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(python_log, <span class="at">seasonal =</span> <span class="cn">TRUE</span>, <span class="at">stepwise =</span> <span class="cn">FALSE</span>, <span class="at">approximation =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb61-448"><a href="#cb61-448" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-449"><a href="#cb61-449" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;=== AUTO ARIMA NÁVRH ===&quot;</span>)</span>
-<span id="cb61-450"><a href="#cb61-450" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_auto)</span>
-<span id="cb61-451"><a href="#cb61-451" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-452"><a href="#cb61-452" aria-hidden="true" tabindex="-1"></a><span class="co"># Srovnání AICc</span></span>
-<span id="cb61-453"><a href="#cb61-453" aria-hidden="true" tabindex="-1"></a><span class="co"># Pozor: Porovnáváme náš finální manuální model (fit_manual_final) s automatem</span></span>
-<span id="cb61-454"><a href="#cb61-454" aria-hidden="true" tabindex="-1"></a>srovnani <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb61-455"><a href="#cb61-455" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model =</span> <span class="fu">c</span>(<span class="st">&quot;Náš manuální (0,2,1)(0,1,1)&quot;</span>, <span class="st">&quot;Auto ARIMA návrh&quot;</span>),</span>
-<span id="cb61-456"><a href="#cb61-456" aria-hidden="true" tabindex="-1"></a>  <span class="at">AICc =</span> <span class="fu">c</span>(fit_manual_final<span class="sc">$</span>aicc, fit_auto<span class="sc">$</span>aicc)</span>
-<span id="cb61-457"><a href="#cb61-457" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb61-458"><a href="#cb61-458" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(srovnani)</span>
-<span id="cb61-459"><a href="#cb61-459" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-460"><a href="#cb61-460" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-461"><a href="#cb61-461" aria-hidden="true" tabindex="-1"></a>Pokud auto.arima zvolila stejný model nebo model s velmi podobným AICc, potvrzuje to kvalitu naší manuální identifikace. Za finální model pro predikci volíme ten s nižším AICc (pravděpodobně náš redukovaný model nebo model shodný).</span>
-<span id="cb61-462"><a href="#cb61-462" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-465"><a href="#cb61-465" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-466"><a href="#cb61-466" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: final-model-select</span></span>
-<span id="cb61-467"><a href="#cb61-467" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-468"><a href="#cb61-468" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-469"><a href="#cb61-469" aria-hidden="true" tabindex="-1"></a><span class="co"># Výběr vítěze pro predikci</span></span>
-<span id="cb61-470"><a href="#cb61-470" aria-hidden="true" tabindex="-1"></a><span class="co"># Pokud je náš model srovnatelný (rozdíl AICc &lt; 2) nebo lepší, bereme náš.</span></span>
-<span id="cb61-471"><a href="#cb61-471" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (fit_manual_final<span class="sc">$</span>aicc <span class="sc">&lt;</span> (fit_auto<span class="sc">$</span>aicc <span class="sc">+</span> <span class="dv">2</span>)) {</span>
-<span id="cb61-472"><a href="#cb61-472" aria-hidden="true" tabindex="-1"></a>  final_model <span class="ot">&lt;-</span> fit_manual_final</span>
-<span id="cb61-473"><a href="#cb61-473" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Vítěz: Manuální model&quot;</span>)</span>
-<span id="cb61-474"><a href="#cb61-474" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb61-475"><a href="#cb61-475" aria-hidden="true" tabindex="-1"></a>  final_model <span class="ot">&lt;-</span> fit_auto</span>
-<span id="cb61-476"><a href="#cb61-476" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Vítěz: Auto ARIMA&quot;</span>)</span>
-<span id="cb61-477"><a href="#cb61-477" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb61-478"><a href="#cb61-478" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-479"><a href="#cb61-479" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-480"><a href="#cb61-480" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6. Diagnostika modelu</span></span>
-<span id="cb61-481"><a href="#cb61-481" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-482"><a href="#cb61-482" aria-hidden="true" tabindex="-1"></a>Předtím, než model použijeme k predikci, musíme ověřit, zda jeho rezidua (chyby) splňují předpoklady &quot;bílého šumu&quot;. Zkontrolujeme:</span>
-<span id="cb61-483"><a href="#cb61-483" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-484"><a href="#cb61-484" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Zda rezidua nevykazují autokorelaci (podstatná informace nezůstala v datech).</span>
-<span id="cb61-485"><a href="#cb61-485" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-486"><a href="#cb61-486" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Zda mají normální rozdělení.</span>
-<span id="cb61-487"><a href="#cb61-487" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-490"><a href="#cb61-490" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-491"><a href="#cb61-491" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: diagnostika</span></span>
-<span id="cb61-492"><a href="#cb61-492" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-493"><a href="#cb61-493" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-494"><a href="#cb61-494" aria-hidden="true" tabindex="-1"></a><span class="co"># Grafická diagnostika</span></span>
-<span id="cb61-495"><a href="#cb61-495" aria-hidden="true" tabindex="-1"></a><span class="fu">checkresiduals</span>(final_model)</span>
-<span id="cb61-496"><a href="#cb61-496" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-497"><a href="#cb61-497" aria-hidden="true" tabindex="-1"></a><span class="co"># Ljung-Boxův test nezávislosti reziduí</span></span>
-<span id="cb61-498"><a href="#cb61-498" aria-hidden="true" tabindex="-1"></a><span class="co"># H0: Rezidua jsou nezávislá (model je v pořádku)</span></span>
-<span id="cb61-499"><a href="#cb61-499" aria-hidden="true" tabindex="-1"></a><span class="co"># H1: Rezidua jsou autokorelovaná</span></span>
-<span id="cb61-500"><a href="#cb61-500" aria-hidden="true" tabindex="-1"></a>lb_test <span class="ot">&lt;-</span> <span class="fu">checkresiduals</span>(final_model, <span class="at">plot =</span> <span class="cn">FALSE</span>, <span class="at">lag =</span> <span class="dv">24</span>)</span>
-<span id="cb61-501"><a href="#cb61-501" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(lb_test)</span>
-<span id="cb61-502"><a href="#cb61-502" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-503"><a href="#cb61-503" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-504"><a href="#cb61-504" aria-hidden="true" tabindex="-1"></a>Vyhodnocení diagnostiky:Pokud je p-hodnota Ljung-Boxova testu $&gt; 0.05$, nezamítáme nulovou hypotézu. To znamená, že model úspěšně zachytil veškerou strukturu v datech a rezidua jsou náhodná.7. PredikceProtože model vyhovuje diagnostickým testům, provedeme predikci na 12 měsíců dopředu. Je nutné provést zpětnou transformaci (exponenciálu), protože model pracoval s logaritmy.</span>
-<span id="cb61-505"><a href="#cb61-505" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-508"><a href="#cb61-508" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb61-509"><a href="#cb61-509" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: predikce</span></span>
-<span id="cb61-510"><a href="#cb61-510" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb61-511"><a href="#cb61-511" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-512"><a href="#cb61-512" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Predikce v logaritmech</span></span>
-<span id="cb61-513"><a href="#cb61-513" aria-hidden="true" tabindex="-1"></a>forecast_log <span class="ot">&lt;-</span> <span class="fu">forecast</span>(final_model, <span class="at">h =</span> <span class="dv">12</span>)</span>
-<span id="cb61-514"><a href="#cb61-514" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-515"><a href="#cb61-515" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Zpětná transformace (exp)</span></span>
-<span id="cb61-516"><a href="#cb61-516" aria-hidden="true" tabindex="-1"></a>forecast_orig <span class="ot">&lt;-</span> forecast_log</span>
-<span id="cb61-517"><a href="#cb61-517" aria-hidden="true" tabindex="-1"></a>forecast_orig<span class="sc">$</span>mean <span class="ot">&lt;-</span> <span class="fu">exp</span>(forecast_log<span class="sc">$</span>mean)</span>
-<span id="cb61-518"><a href="#cb61-518" aria-hidden="true" tabindex="-1"></a>forecast_orig<span class="sc">$</span>lower <span class="ot">&lt;-</span> <span class="fu">exp</span>(forecast_log<span class="sc">$</span>lower)</span>
-<span id="cb61-519"><a href="#cb61-519" aria-hidden="true" tabindex="-1"></a>forecast_orig<span class="sc">$</span>upper <span class="ot">&lt;-</span> <span class="fu">exp</span>(forecast_log<span class="sc">$</span>upper)</span>
-<span id="cb61-520"><a href="#cb61-520" aria-hidden="true" tabindex="-1"></a>forecast_orig<span class="sc">$</span>x <span class="ot">&lt;-</span> <span class="fu">exp</span>(forecast_log<span class="sc">$</span>x)</span>
-<span id="cb61-521"><a href="#cb61-521" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-522"><a href="#cb61-522" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Vykreslení</span></span>
-<span id="cb61-523"><a href="#cb61-523" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(forecast_orig) <span class="sc">+</span></span>
-<span id="cb61-524"><a href="#cb61-524" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(forecast_orig<span class="sc">$</span>mean, <span class="at">series =</span> <span class="st">&quot;Predikce&quot;</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb61-525"><a href="#cb61-525" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Predikce poptávky po Pythonu (SARIMA)&quot;</span>,</span>
-<span id="cb61-526"><a href="#cb61-526" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Počet dotazů&quot;</span>,</span>
-<span id="cb61-527"><a href="#cb61-527" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Rok&quot;</span>) <span class="sc">+</span></span>
-<span id="cb61-528"><a href="#cb61-528" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb61-529"><a href="#cb61-529" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-530"><a href="#cb61-530" aria-hidden="true" tabindex="-1"></a><span class="co"># Výpis hodnot</span></span>
-<span id="cb61-531"><a href="#cb61-531" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(forecast_orig<span class="sc">$</span>mean, <span class="dv">12</span>))</span>
-<span id="cb61-532"><a href="#cb61-532" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb61-533"><a href="#cb61-533" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-534"><a href="#cb61-534" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb61-535"><a href="#cb61-535" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-536"><a href="#cb61-536" aria-hidden="true" tabindex="-1"></a><span class="fu"># Závěr</span></span>
-<span id="cb61-537"><a href="#cb61-537" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-538"><a href="#cb61-538" aria-hidden="true" tabindex="-1"></a>V této práci jsme analyzovali vývoj popularity jazyka Python na StackOverflow.Zjistili jsme silný rostoucí trend a sezónnost.Pomocí logaritmické transformace a diferencování jsme data stacionarizovali.Manuální analýzou koeficientů a srovnáním s automatickou selekcí jsme identifikovali jako nejvhodnější model SARIMA(1,1,1)(0,1,1)<span class="sc">\[</span>12<span class="sc">\]</span>.Tento model prošel diagnostickými testy a byl použit k predikci, která očekává další růst zájmu s typickými sezónními výkyvy.</span>
-<span id="cb61-539"><a href="#cb61-539" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-540"><a href="#cb61-540" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Shrnutí výsledků</span></span>
-<span id="cb61-541"><a href="#cb61-541" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-542"><a href="#cb61-542" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Shrnutí chování původní i transformované řady.</span>
-<span id="cb61-543"><a href="#cb61-543" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Porovnání přesnosti modelů (AIC, BIC, RMSE).</span>
-<span id="cb61-544"><a href="#cb61-544" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Vyhodnocení nejvhodnějšího modelu podle predikční schopnosti.</span>
-<span id="cb61-545"><a href="#cb61-545" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-546"><a href="#cb61-546" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Diskuze</span></span>
-<span id="cb61-547"><a href="#cb61-547" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-548"><a href="#cb61-548" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Omezení modelu.</span>
-<span id="cb61-549"><a href="#cb61-549" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Možnosti vylepšení (delší řada, jiná frekvence, jiné transformace).</span>
-<span id="cb61-550"><a href="#cb61-550" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-551"><a href="#cb61-551" aria-hidden="true" tabindex="-1"></a><span class="fu">## Závěrečné poznámky</span></span>
-<span id="cb61-552"><a href="#cb61-552" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-553"><a href="#cb61-553" aria-hidden="true" tabindex="-1"></a>Projekt ukazuje postup od přípravy dat až po modelování a predikci pomocí metod ARIMA a jejich variant.</span>
+<div class="sourceCode" id="cb51" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> &quot;Projekt do předmětu Časové řady I&quot;</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> &quot;Michal Červenka, Martin Heger, Štěpán Husa&quot;</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> &quot;2025-12-15&quot;</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="an">lang:</span><span class="co"> cs</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: default</span></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 3</span></span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-title: &quot;Obsah&quot;</span></span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a><span class="an">code-tools:</span><span class="co"> true</span></span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a><span class="an">embed-resources:</span><span class="co"> true</span></span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a><span class="an">fig-cap:</span><span class="co"> true</span></span>
+<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span></span>
+<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a><span class="co">  echo: true</span></span>
+<span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a><span class="co">  warning: false</span></span>
+<span id="cb51-19"><a href="#cb51-19" aria-hidden="true" tabindex="-1"></a><span class="co">  message: false</span></span>
+<span id="cb51-20"><a href="#cb51-20" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb51-21"><a href="#cb51-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-22"><a href="#cb51-22" aria-hidden="true" tabindex="-1"></a><span class="fu"># Úvod</span></span>
+<span id="cb51-23"><a href="#cb51-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-24"><a href="#cb51-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Načtení knihoven</span></span>
+<span id="cb51-25"><a href="#cb51-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-28"><a href="#cb51-28" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-29"><a href="#cb51-29" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: knihovny</span></span>
+<span id="cb51-30"><a href="#cb51-30" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-31"><a href="#cb51-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-32"><a href="#cb51-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Načtení potřebných balíčků</span></span>
+<span id="cb51-33"><a href="#cb51-33" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(forecast)) <span class="fu">install.packages</span>(<span class="st">&quot;forecast&quot;</span>, <span class="at">repos =</span> <span class="st">&quot;https://cloud.r-project.org&quot;</span>)</span>
+<span id="cb51-34"><a href="#cb51-34" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(zoo)) <span class="fu">install.packages</span>(<span class="st">&quot;zoo&quot;</span>)</span>
+<span id="cb51-35"><a href="#cb51-35" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(readr)) <span class="fu">install.packages</span>(<span class="st">&quot;readr&quot;</span>, <span class="at">repos =</span> <span class="st">&quot;https://cloud.r-project.org&quot;</span>)</span>
+<span id="cb51-36"><a href="#cb51-36" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(tseries)) <span class="fu">install.packages</span>(<span class="st">&quot;tseries&quot;</span>, <span class="at">repos =</span> <span class="st">&quot;https://cloud.r-project.org&quot;</span>)</span>
+<span id="cb51-37"><a href="#cb51-37" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb51-38"><a href="#cb51-38" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(zoo)</span>
+<span id="cb51-39"><a href="#cb51-39" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
+<span id="cb51-40"><a href="#cb51-40" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
+<span id="cb51-41"><a href="#cb51-41" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb51-42"><a href="#cb51-42" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb51-43"><a href="#cb51-43" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
+<span id="cb51-44"><a href="#cb51-44" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-45"><a href="#cb51-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-46"><a href="#cb51-46" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Načtení dat</span></span>
+<span id="cb51-47"><a href="#cb51-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-50"><a href="#cb51-50" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-51"><a href="#cb51-51" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: data</span></span>
+<span id="cb51-52"><a href="#cb51-52" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-53"><a href="#cb51-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-54"><a href="#cb51-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Načtení datasetu</span></span>
+<span id="cb51-55"><a href="#cb51-55" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;MLTollsStackOverflow.csv&quot;</span>)</span>
+<span id="cb51-56"><a href="#cb51-56" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data[<span class="fu">c</span>(<span class="st">&quot;month&quot;</span>, <span class="st">&quot;python&quot;</span>, <span class="st">&quot;r&quot;</span>)])</span>
+<span id="cb51-57"><a href="#cb51-57" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-58"><a href="#cb51-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-59"><a href="#cb51-59" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Popis dat</span></span>
+<span id="cb51-60"><a href="#cb51-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-61"><a href="#cb51-61" aria-hidden="true" tabindex="-1"></a>Použitý dataset obsahuje měsíční počty dotazů na StackOverflow od roku 2009 do roku 2020 pro různé programovací knihovny a technologie. Pro účely této analýzy se zaměřujeme pouze na dvě proměnné – Python a R, které reprezentují počet dotazů souvisejících s těmito jazyky v jednotlivých měsících.</span>
+<span id="cb51-62"><a href="#cb51-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-63"><a href="#cb51-63" aria-hidden="true" tabindex="-1"></a>Nejprve jsme si zobrazili několik prvních pozorování datasetu, abychom se seznámili se strukturou dat a ověřili, že hodnoty odpovídají očekávanému formátu. Následně jsme vypočítali základní popisné statistiky pro obě časové řady.</span>
+<span id="cb51-64"><a href="#cb51-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-65"><a href="#cb51-65" aria-hidden="true" tabindex="-1"></a><span class="fu">### Popisné statistiky - Python &amp; R</span></span>
+<span id="cb51-66"><a href="#cb51-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-69"><a href="#cb51-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-70"><a href="#cb51-70" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: popis-dat</span></span>
+<span id="cb51-71"><a href="#cb51-71" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-72"><a href="#cb51-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-73"><a href="#cb51-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Popisné statistiky</span></span>
+<span id="cb51-74"><a href="#cb51-74" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data[, <span class="fu">c</span>(<span class="st">&quot;python&quot;</span>, <span class="st">&quot;r&quot;</span>)])</span>
+<span id="cb51-75"><a href="#cb51-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-76"><a href="#cb51-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-77"><a href="#cb51-77" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Minimální počet dotazů je výrazně vyšší u Pythonu než u R.</span>
+<span id="cb51-78"><a href="#cb51-78" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Medián i průměr jsou u Pythonu několikanásobně vyšší než u R, což naznačuje dlouhodobě větší popularitu Pythonu.</span>
+<span id="cb51-79"><a href="#cb51-79" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Rozptyl hodnot je u Pythonu rovněž vyšší, což souvisí s rychlejším růstem zájmu v čase.</span>
+<span id="cb51-80"><a href="#cb51-80" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Maximální hodnoty ukazují, že Python dosahuje až téměř 24 000 dotazů za měsíc, zatímco R přibližně 5 100.</span>
+<span id="cb51-81"><a href="#cb51-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-82"><a href="#cb51-82" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb51-83"><a href="#cb51-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-84"><a href="#cb51-84" aria-hidden="true" tabindex="-1"></a><span class="fu"># Analýza</span></span>
+<span id="cb51-85"><a href="#cb51-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-86"><a href="#cb51-86" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Předběžný výzkum časové řady</span></span>
+<span id="cb51-87"><a href="#cb51-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-88"><a href="#cb51-88" aria-hidden="true" tabindex="-1"></a><span class="fu">### Grafické zobrazení časových řad</span></span>
+<span id="cb51-89"><a href="#cb51-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-90"><a href="#cb51-90" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Python</span></span>
+<span id="cb51-91"><a href="#cb51-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-94"><a href="#cb51-94" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-95"><a href="#cb51-95" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: vyzkum</span></span>
+<span id="cb51-96"><a href="#cb51-96" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-97"><a href="#cb51-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-98"><a href="#cb51-98" aria-hidden="true" tabindex="-1"></a><span class="co"># Vytvoření časové řady: Python</span></span>
+<span id="cb51-99"><a href="#cb51-99" aria-hidden="true" tabindex="-1"></a>python_ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(data<span class="sc">$</span>python,</span>
+<span id="cb51-100"><a href="#cb51-100" aria-hidden="true" tabindex="-1"></a>                <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2009</span>, <span class="dv">1</span>),</span>
+<span id="cb51-101"><a href="#cb51-101" aria-hidden="true" tabindex="-1"></a>                <span class="co">#end = c(2015, 12),</span></span>
+<span id="cb51-102"><a href="#cb51-102" aria-hidden="true" tabindex="-1"></a>                <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb51-103"><a href="#cb51-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-104"><a href="#cb51-104" aria-hidden="true" tabindex="-1"></a><span class="co"># Vytvoření časové řady: R</span></span>
+<span id="cb51-105"><a href="#cb51-105" aria-hidden="true" tabindex="-1"></a>r_ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(data<span class="sc">$</span>r,</span>
+<span id="cb51-106"><a href="#cb51-106" aria-hidden="true" tabindex="-1"></a>           <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2009</span>, <span class="dv">1</span>),</span>
+<span id="cb51-107"><a href="#cb51-107" aria-hidden="true" tabindex="-1"></a>           <span class="co">#end = c(2015, 12),</span></span>
+<span id="cb51-108"><a href="#cb51-108" aria-hidden="true" tabindex="-1"></a>           <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb51-109"><a href="#cb51-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-110"><a href="#cb51-110" aria-hidden="true" tabindex="-1"></a><span class="co"># Graf: Python</span></span>
+<span id="cb51-111"><a href="#cb51-111" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(python_ts,</span>
+<span id="cb51-112"><a href="#cb51-112" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;StackOverflow: dotazy k Pythonu&quot;</span>,</span>
+<span id="cb51-113"><a href="#cb51-113" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;počet dotazů za měsíc&quot;</span>,</span>
+<span id="cb51-114"><a href="#cb51-114" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;rok&quot;</span>)</span>
+<span id="cb51-115"><a href="#cb51-115" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-116"><a href="#cb51-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-117"><a href="#cb51-117" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Jasný rostoucí trend od roku 2009 do 2020.</span>
+<span id="cb51-118"><a href="#cb51-118" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Postupem času narůstá i variabilita počtu dotazů.</span>
+<span id="cb51-119"><a href="#cb51-119" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Viditelné pravidelné sezónní kolísání.</span>
+<span id="cb51-120"><a href="#cb51-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-121"><a href="#cb51-121" aria-hidden="true" tabindex="-1"></a><span class="fu">#### R</span></span>
+<span id="cb51-122"><a href="#cb51-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-125"><a href="#cb51-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-126"><a href="#cb51-126" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: vyzkum_R</span></span>
+<span id="cb51-127"><a href="#cb51-127" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-128"><a href="#cb51-128" aria-hidden="true" tabindex="-1"></a><span class="co"># Graf: R</span></span>
+<span id="cb51-129"><a href="#cb51-129" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r_ts,</span>
+<span id="cb51-130"><a href="#cb51-130" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;StackOverflow: dotazy k R&quot;</span>,</span>
+<span id="cb51-131"><a href="#cb51-131" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;počet dotazů za měsíc&quot;</span>,</span>
+<span id="cb51-132"><a href="#cb51-132" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;rok&quot;</span>)</span>
+<span id="cb51-133"><a href="#cb51-133" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-134"><a href="#cb51-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-135"><a href="#cb51-135" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Trend také roste, ale pomaleji a méně výrazně než u Pythonu.</span>
+<span id="cb51-136"><a href="#cb51-136" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Amplituda sezónnosti je menší.</span>
+<span id="cb51-137"><a href="#cb51-137" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Po roce 2017 se růst zpomaluje.</span>
+<span id="cb51-138"><a href="#cb51-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-139"><a href="#cb51-139" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Společný graf</span></span>
+<span id="cb51-140"><a href="#cb51-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-143"><a href="#cb51-143" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-144"><a href="#cb51-144" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: vyzkum_spolecny</span></span>
+<span id="cb51-145"><a href="#cb51-145" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-146"><a href="#cb51-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-147"><a href="#cb51-147" aria-hidden="true" tabindex="-1"></a><span class="co"># Společný graf</span></span>
+<span id="cb51-148"><a href="#cb51-148" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb51-149"><a href="#cb51-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-150"><a href="#cb51-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-151"><a href="#cb51-151" aria-hidden="true" tabindex="-1"></a><span class="fu">ts.plot</span>(<span class="fu">cbind</span>(python_ts, r_ts),</span>
+<span id="cb51-152"><a href="#cb51-152" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>),</span>
+<span id="cb51-153"><a href="#cb51-153" aria-hidden="true" tabindex="-1"></a>        <span class="at">lty =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
+<span id="cb51-154"><a href="#cb51-154" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Python vs R&quot;</span>,</span>
+<span id="cb51-155"><a href="#cb51-155" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">&quot;Počet dotazů za měsíc&quot;</span>)</span>
+<span id="cb51-156"><a href="#cb51-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-157"><a href="#cb51-157" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>,</span>
+<span id="cb51-158"><a href="#cb51-158" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Python&quot;</span>, <span class="st">&quot;R&quot;</span>),</span>
+<span id="cb51-159"><a href="#cb51-159" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>),</span>
+<span id="cb51-160"><a href="#cb51-160" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
+<span id="cb51-161"><a href="#cb51-161" aria-hidden="true" tabindex="-1"></a>       <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>)</span>
+<span id="cb51-162"><a href="#cb51-162" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-163"><a href="#cb51-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-164"><a href="#cb51-164" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Python má výrazně větší počet dotazů a rychleji roste.</span>
+<span id="cb51-165"><a href="#cb51-165" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Od roku \~2014 se rozdíl ještě zvětšuje.</span>
+<span id="cb51-166"><a href="#cb51-166" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Oba jazyky mají podobný vzor sezónnosti.</span>
+<span id="cb51-167"><a href="#cb51-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-168"><a href="#cb51-168" aria-hidden="true" tabindex="-1"></a><span class="fu">### Aditivní dekompozice</span></span>
+<span id="cb51-169"><a href="#cb51-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-170"><a href="#cb51-170" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Python</span></span>
+<span id="cb51-171"><a href="#cb51-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-174"><a href="#cb51-174" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-175"><a href="#cb51-175" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: vyzkum_3</span></span>
+<span id="cb51-176"><a href="#cb51-176" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-177"><a href="#cb51-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-178"><a href="#cb51-178" aria-hidden="true" tabindex="-1"></a><span class="co"># Additivní dekompozice</span></span>
+<span id="cb51-179"><a href="#cb51-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-180"><a href="#cb51-180" aria-hidden="true" tabindex="-1"></a><span class="do">## Python</span></span>
+<span id="cb51-181"><a href="#cb51-181" aria-hidden="true" tabindex="-1"></a>decomp_python <span class="ot">&lt;-</span> <span class="fu">decompose</span>(python_ts, <span class="at">type =</span> <span class="st">&quot;additive&quot;</span>)</span>
+<span id="cb51-182"><a href="#cb51-182" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(decomp_python)</span>
+<span id="cb51-183"><a href="#cb51-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-184"><a href="#cb51-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-185"><a href="#cb51-185" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Trend**: silně rostoucí, plynulý.</span>
+<span id="cb51-186"><a href="#cb51-186" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Sezónnost**: pravidelná, opakující se ročně.</span>
+<span id="cb51-187"><a href="#cb51-187" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Remainder**: náhodné fluktuace bez jasné struktury.</span>
+<span id="cb51-188"><a href="#cb51-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-189"><a href="#cb51-189" aria-hidden="true" tabindex="-1"></a><span class="fu">#### R</span></span>
+<span id="cb51-190"><a href="#cb51-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-193"><a href="#cb51-193" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-194"><a href="#cb51-194" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: vyzkum_4</span></span>
+<span id="cb51-195"><a href="#cb51-195" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-196"><a href="#cb51-196" aria-hidden="true" tabindex="-1"></a><span class="do">## R</span></span>
+<span id="cb51-197"><a href="#cb51-197" aria-hidden="true" tabindex="-1"></a>stl_r <span class="ot">&lt;-</span> <span class="fu">stl</span>(r_ts, <span class="at">s.window =</span> <span class="st">&quot;periodic&quot;</span>)</span>
+<span id="cb51-198"><a href="#cb51-198" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(stl_r)</span>
+<span id="cb51-199"><a href="#cb51-199" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-200"><a href="#cb51-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-201"><a href="#cb51-201" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Trend**: roste, ale méně než Python; kolem 2017 mírné zpomalení.</span>
+<span id="cb51-202"><a href="#cb51-202" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Sezónnost**: také pravidelná a stabilní.</span>
+<span id="cb51-203"><a href="#cb51-203" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Remainder**: náhodný šum bez výrazných anomálií.</span>
+<span id="cb51-204"><a href="#cb51-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-205"><a href="#cb51-205" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Testování stacionarity</span></span>
+<span id="cb51-206"><a href="#cb51-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-207"><a href="#cb51-207" aria-hidden="true" tabindex="-1"></a><span class="fu">### Python</span></span>
+<span id="cb51-208"><a href="#cb51-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-211"><a href="#cb51-211" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-212"><a href="#cb51-212" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: stacionarita_python</span></span>
+<span id="cb51-213"><a href="#cb51-213" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-214"><a href="#cb51-214" aria-hidden="true" tabindex="-1"></a>adf_python <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(python_ts)</span>
+<span id="cb51-215"><a href="#cb51-215" aria-hidden="true" tabindex="-1"></a>adf_python</span>
+<span id="cb51-216"><a href="#cb51-216" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-217"><a href="#cb51-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-218"><a href="#cb51-218" aria-hidden="true" tabindex="-1"></a><span class="fu">### R</span></span>
+<span id="cb51-219"><a href="#cb51-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-222"><a href="#cb51-222" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-223"><a href="#cb51-223" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: stacionarita_r</span></span>
+<span id="cb51-224"><a href="#cb51-224" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-225"><a href="#cb51-225" aria-hidden="true" tabindex="-1"></a>adf_r <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(r_ts)</span>
+<span id="cb51-226"><a href="#cb51-226" aria-hidden="true" tabindex="-1"></a>adf_r</span>
+<span id="cb51-227"><a href="#cb51-227" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-228"><a href="#cb51-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-229"><a href="#cb51-229" aria-hidden="true" tabindex="-1"></a><span class="fu">### Python - diference</span></span>
+<span id="cb51-230"><a href="#cb51-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-233"><a href="#cb51-233" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-234"><a href="#cb51-234" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: stacionarita_python_diff</span></span>
+<span id="cb51-235"><a href="#cb51-235" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-236"><a href="#cb51-236" aria-hidden="true" tabindex="-1"></a>adf_python_diff <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(<span class="fu">diff</span>(python_ts))</span>
+<span id="cb51-237"><a href="#cb51-237" aria-hidden="true" tabindex="-1"></a>adf_python_diff</span>
+<span id="cb51-238"><a href="#cb51-238" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-239"><a href="#cb51-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-240"><a href="#cb51-240" aria-hidden="true" tabindex="-1"></a><span class="fu">### R - diference</span></span>
+<span id="cb51-241"><a href="#cb51-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-244"><a href="#cb51-244" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-245"><a href="#cb51-245" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: stacionarita_r_diff</span></span>
+<span id="cb51-246"><a href="#cb51-246" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-247"><a href="#cb51-247" aria-hidden="true" tabindex="-1"></a>adf_r_diff  <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(<span class="fu">diff</span>(r_ts))</span>
+<span id="cb51-248"><a href="#cb51-248" aria-hidden="true" tabindex="-1"></a>adf_r_diff</span>
+<span id="cb51-249"><a href="#cb51-249" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-250"><a href="#cb51-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-251"><a href="#cb51-251" aria-hidden="true" tabindex="-1"></a>**Shrnutí**:</span>
+<span id="cb51-252"><a href="#cb51-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-253"><a href="#cb51-253" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Obě časové řady jsou nestacionární v původní podobě.</span>
+<span id="cb51-254"><a href="#cb51-254" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Důvodem je především rostoucí trend a možná sezónnost.</span>
+<span id="cb51-255"><a href="#cb51-255" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Obě řady se stávají stacionární po jedné diferenci.</span>
+<span id="cb51-256"><a href="#cb51-256" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Pro modelování ARIMA bude nutné řady diferencovat (parametr d = 1).</span>
+<span id="cb51-257"><a href="#cb51-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-258"><a href="#cb51-258" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Autokorelace a parciální autokorelace</span></span>
+<span id="cb51-259"><a href="#cb51-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-260"><a href="#cb51-260" aria-hidden="true" tabindex="-1"></a><span class="fu">### Python</span></span>
+<span id="cb51-261"><a href="#cb51-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-264"><a href="#cb51-264" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-265"><a href="#cb51-265" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: acf-pacf_python</span></span>
+<span id="cb51-266"><a href="#cb51-266" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-267"><a href="#cb51-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-268"><a href="#cb51-268" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb51-269"><a href="#cb51-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-270"><a href="#cb51-270" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(python_ts, <span class="at">main =</span> <span class="st">&quot;ACF – Python&quot;</span>)</span>
+<span id="cb51-271"><a href="#cb51-271" aria-hidden="true" tabindex="-1"></a><span class="fu">pacf</span>(python_ts, <span class="at">main =</span> <span class="st">&quot;PACF – Python&quot;</span>)</span>
+<span id="cb51-272"><a href="#cb51-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-273"><a href="#cb51-273" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">diff</span>(python_ts), <span class="at">main =</span> <span class="st">&quot;ACF – diff(Python)&quot;</span>)</span>
+<span id="cb51-274"><a href="#cb51-274" aria-hidden="true" tabindex="-1"></a><span class="fu">pacf</span>(<span class="fu">diff</span>(python_ts), <span class="at">main =</span> <span class="st">&quot;PACF – diff(Python)&quot;</span>)</span>
+<span id="cb51-275"><a href="#cb51-275" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-276"><a href="#cb51-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-277"><a href="#cb51-277" aria-hidden="true" tabindex="-1"></a><span class="fu">### R</span></span>
+<span id="cb51-278"><a href="#cb51-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-281"><a href="#cb51-281" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-282"><a href="#cb51-282" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: acf-pacf_R</span></span>
+<span id="cb51-283"><a href="#cb51-283" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-284"><a href="#cb51-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-285"><a href="#cb51-285" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb51-286"><a href="#cb51-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-287"><a href="#cb51-287" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(r_ts, <span class="at">main =</span> <span class="st">&quot;ACF – R&quot;</span>)</span>
+<span id="cb51-288"><a href="#cb51-288" aria-hidden="true" tabindex="-1"></a><span class="fu">pacf</span>(r_ts, <span class="at">main =</span> <span class="st">&quot;PACF – R&quot;</span>)</span>
+<span id="cb51-289"><a href="#cb51-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-290"><a href="#cb51-290" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">diff</span>(r_ts), <span class="at">main =</span> <span class="st">&quot;ACF – diff(R)&quot;</span>)</span>
+<span id="cb51-291"><a href="#cb51-291" aria-hidden="true" tabindex="-1"></a><span class="fu">pacf</span>(<span class="fu">diff</span>(r_ts), <span class="at">main =</span> <span class="st">&quot;PACF – diff(R)&quot;</span>)</span>
+<span id="cb51-292"><a href="#cb51-292" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-293"><a href="#cb51-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-294"><a href="#cb51-294" aria-hidden="true" tabindex="-1"></a>**Shrnutí**:</span>
+<span id="cb51-295"><a href="#cb51-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-296"><a href="#cb51-296" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Původní řada: ACF pomalu klesá → nestacionární, potvrzuje trend.</span>
+<span id="cb51-297"><a href="#cb51-297" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Po diferenciaci: ACF má výrazný lag 1, PACF také → vhodné modely ARIMA(1,1,1) nebo blízké alternativy.</span>
+<span id="cb51-298"><a href="#cb51-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-299"><a href="#cb51-299" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4. Výběr vhodných modelů</span></span>
+<span id="cb51-300"><a href="#cb51-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-301"><a href="#cb51-301" aria-hidden="true" tabindex="-1"></a>Na základě předchozí analýzy ACF a PACF a dekompozice řady přistupujeme k manuální konstrukci modelu. Zaměříme se přitom na časovou řadu dotazů na Python (R má velmi podobný průběh). Nejprve však data logaritmujeme, abychom stabilizovali rostoucí rozptyl (heteroskedasticitu), který jsme pozorovali v grafické analýze.Fragment kódu</span>
+<span id="cb51-302"><a href="#cb51-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-305"><a href="#cb51-305" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-306"><a href="#cb51-306" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: log-transformace</span></span>
+<span id="cb51-307"><a href="#cb51-307" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-308"><a href="#cb51-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-309"><a href="#cb51-309" aria-hidden="true" tabindex="-1"></a><span class="co"># Logaritmická transformace pro stabilizaci rozptylu</span></span>
+<span id="cb51-310"><a href="#cb51-310" aria-hidden="true" tabindex="-1"></a>python_log <span class="ot">&lt;-</span> <span class="fu">log</span>(python_ts)</span>
+<span id="cb51-311"><a href="#cb51-311" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-312"><a href="#cb51-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-313"><a href="#cb51-313" aria-hidden="true" tabindex="-1"></a>**Odůvodnění volby parametrů modelu SARIMA**</span>
+<span id="cb51-314"><a href="#cb51-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-315"><a href="#cb51-315" aria-hidden="true" tabindex="-1"></a>Naše vizuální analýza ACF a PACF (po diferenciaci) ukázala významné hodnoty na lagu 1,2 (a to záporné) a na sezónním lagu 12. To nás vede k následující volbě parametrů pro výchozí model SARIMA(p,d,q)(P,D,Q)<span class="sc">\[</span>12<span class="sc">\]</span>:</span>
+<span id="cb51-316"><a href="#cb51-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-317"><a href="#cb51-317" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Trend (**$d=1$): Původní časová řada vykazovala jasný rostoucí trend a nestacionaritu. Aplikace první diference vedla k odstranění nestacionarity, což potvrdil Augmented Dickey-Fullerův test (p-hodnota $&lt; 0.01$). Navíc graf ACF diferencované řady ukazuje na lagu 1 a 2 významné záporné hodnoty. Tento jev je v literatuře považován za varovný signál proti dalšímu diferencování (riziko tzv. *over-differencing*). Na základě těchto statistických i vizuálních testů proto fixujeme řád diferenciace na **\$d=1\$**.</span>
+<span id="cb51-318"><a href="#cb51-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-319"><a href="#cb51-319" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Sezónnost (**$D=1, s=12$): Časová řada vykazuje zřetelnou roční cykličnost. Klíčovým indikátorem je statisticky významná kladná hodnota autokorelační funkce (ACF) na lagu 12, která přetrvává i po provedení první diference. Tento vzor indikuje přítomnost tzv. stochastické sezónnosti, kterou je nutné modelovat aplikací sezónní diference ($D=1$) s periodou $s=12$.</span>
+<span id="cb51-320"><a href="#cb51-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-321"><a href="#cb51-321" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Nesezónní struktura (\$p=1, q=2\$):</span>
+<span id="cb51-322"><a href="#cb51-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-323"><a href="#cb51-323" aria-hidden="true" tabindex="-1"></a>    Rozhodování o řádech AR a MA vychází z chování autokorelačních funkcí.</span>
+<span id="cb51-324"><a href="#cb51-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-325"><a href="#cb51-325" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**MA část (**$q=2$): Graf ACF vykazuje na prvních dvou lazích statisticky významné záporné hodnoty, po kterých následuje pokles do pásma nevýznamnosti (useknutí). Tento vzor je charakteristický pro proces klouzavých průměrů druhého řádu ($q=2$).</span>
+<span id="cb51-326"><a href="#cb51-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-327"><a href="#cb51-327" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**AR část (**$p=1$): Graf parciální autokorelace (PACF) nevykazuje ostré useknutí po prvním lagu, ale spíše pozvolnější doznívání, což naznačuje, že čistý MA model by nemusel být dostačující. Proto volíme smíšený model a přidáváme autoregresní člen prvního řádu ($p=1$), abychom zachytili případnou setrvačnost časové řady.</span>
+<span id="cb51-328"><a href="#cb51-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-329"><a href="#cb51-329" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Sezónní struktura (**$P=1, Q=1$): Na sezónních lazích (zejména lag 12) pozorujeme v grafech autokorelačních funkcí statisticky významné hodnoty. Vzhledem k tomu, že jednoznačná identifikace čistého sezónního AR nebo MA procesu je vizuálně obtížná, volíme pro startovací model smíšenou strukturu. Zahrnujeme tedy sezónní autoregresní člen ($P=1$) i sezónní klouzavý průměr ($Q=1$), abychom zachytili komplexní vazby mezi stejnými měsíci v po sobě jdoucích letech.</span>
+<span id="cb51-330"><a href="#cb51-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-331"><a href="#cb51-331" aria-hidden="true" tabindex="-1"></a>Tímto postupem získáváme startovací model SARIMA(1,1,2)(1,1,1)<span class="sc">\[</span>12<span class="sc">\]</span>.</span>
+<span id="cb51-332"><a href="#cb51-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-333"><a href="#cb51-333" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5. Odhad a optimalizace modelů</span></span>
+<span id="cb51-334"><a href="#cb51-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-335"><a href="#cb51-335" aria-hidden="true" tabindex="-1"></a>Nyní tento model odhadneme a provedeme testování statistické významnosti jeho koeficientů. Naším cílem je najít nejjednodušší možný model , proto zkontrolujeme, zda jsou všechny parametry skutečně potřeba.</span>
+<span id="cb51-336"><a href="#cb51-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-339"><a href="#cb51-339" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-340"><a href="#cb51-340" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: odhad-startovaci</span></span>
+<span id="cb51-341"><a href="#cb51-341" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-342"><a href="#cb51-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-343"><a href="#cb51-343" aria-hidden="true" tabindex="-1"></a><span class="co"># Odhad modelu SARIMA(1,1,2)(1,1,1)[12]</span></span>
+<span id="cb51-344"><a href="#cb51-344" aria-hidden="true" tabindex="-1"></a><span class="co"># Volba q=2 vychází z pozorování ACF (lag 1, 2)</span></span>
+<span id="cb51-345"><a href="#cb51-345" aria-hidden="true" tabindex="-1"></a>fit_manual <span class="ot">&lt;-</span> <span class="fu">Arima</span>(python_log, </span>
+<span id="cb51-346"><a href="#cb51-346" aria-hidden="true" tabindex="-1"></a>                    <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>), </span>
+<span id="cb51-347"><a href="#cb51-347" aria-hidden="true" tabindex="-1"></a>                    <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb51-348"><a href="#cb51-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-349"><a href="#cb51-349" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;=== ANALÝZA KOEFICIENTŮ (Startovací model) ===&quot;</span>)</span>
+<span id="cb51-350"><a href="#cb51-350" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_manual)</span>
+<span id="cb51-351"><a href="#cb51-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-352"><a href="#cb51-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-353"><a href="#cb51-353" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-354"><a href="#cb51-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-355"><a href="#cb51-355" aria-hidden="true" tabindex="-1"></a><span class="fu">### Kritická analýza: Jednotkové kořeny a redundance</span></span>
+<span id="cb51-356"><a href="#cb51-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-357"><a href="#cb51-357" aria-hidden="true" tabindex="-1"></a>Při pohledu na odhadnuté parametry narážíme na závažný strukturální problém, který indikuje špatnou specifikaci řádu diferenciace.</span>
+<span id="cb51-358"><a href="#cb51-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-359"><a href="#cb51-359" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**AR část (Jednotkový kořen):** Parametr **ar1** dosahuje hodnoty **0.9935**. To indikuje nestacionaritu a snahu modelu suplovat chybějící diferenciaci ($Y_t - Y_{t-1}$).</span>
+<span id="cb51-360"><a href="#cb51-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-361"><a href="#cb51-361" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**MA část (Hranice invertibility):** Současně parametr **ma1** dosahuje hodnoty **-0.9597**, což je velmi blízko hranice invertibility (-1).</span>
+<span id="cb51-362"><a href="#cb51-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-363"><a href="#cb51-363" aria-hidden="true" tabindex="-1"></a>Tato situace, kdy mají AR a MA kořeny téměř shodnou absolutní hodnotu, ale opačný vliv, se nazývá **redundance parametrů** (parameter cancellation). Model je nestabilní, protože AR a MA složky se vzájemně &quot;perou&quot; – AR složka se snaží trend vytvořit, zatímco silná MA složka se ho snaží kompenzovat.</span>
+<span id="cb51-364"><a href="#cb51-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-365"><a href="#cb51-365" aria-hidden="true" tabindex="-1"></a>Závěr:</span>
+<span id="cb51-366"><a href="#cb51-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-367"><a href="#cb51-367" aria-hidden="true" tabindex="-1"></a>Jediným čistým řešením této patové situace je zvýšení řádu diferenciace na \$d=2\$. Tím se jednotkový kořen z AR části &quot;vyjme&quot; a převede se na pevnou součást modelu (druhou diferenci), čímž se uvolní napětí v parametrech a model se stane stabilním.</span>
+<span id="cb51-368"><a href="#cb51-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-369"><a href="#cb51-369" aria-hidden="true" tabindex="-1"></a>Jelikož se parametr <span class="in">`ar1`</span> choval jako diference, provedeme tuto změnu explicitně:</span>
+<span id="cb51-370"><a href="#cb51-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-371"><a href="#cb51-371" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Zvýšíme řád diferenciace z $d=1$ na $d=2$.</span>
+<span id="cb51-372"><a href="#cb51-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-373"><a href="#cb51-373" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Vyloučíme problematický autoregresní člen (snížíme $p$ z 1 na 0), protože jeho roli převzala druhá diference.</span>
+<span id="cb51-374"><a href="#cb51-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-375"><a href="#cb51-375" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Strukturu klouzavých průměrů ($q=2$), kterou jsme odvodili z grafu ACF (záporné lagy), ponecháme.</span>
+<span id="cb51-376"><a href="#cb51-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-377"><a href="#cb51-377" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>Sezónní část ponecháme v původním nastavení $(1,1,1)$, abychom zachovali konzistenci.</span>
+<span id="cb51-378"><a href="#cb51-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-379"><a href="#cb51-379" aria-hidden="true" tabindex="-1"></a>Definujeme tedy nový manuální model: $SARIMA(0,2,2)(1,1,1)_{12}$.</span>
+<span id="cb51-380"><a href="#cb51-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-383"><a href="#cb51-383" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-384"><a href="#cb51-384" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: odhad-manual-d2</span></span>
+<span id="cb51-385"><a href="#cb51-385" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-386"><a href="#cb51-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-387"><a href="#cb51-387" aria-hidden="true" tabindex="-1"></a><span class="co"># Nový manuální model:</span></span>
+<span id="cb51-388"><a href="#cb51-388" aria-hidden="true" tabindex="-1"></a><span class="co"># - p=0 (odstranili jsme AR kořen)</span></span>
+<span id="cb51-389"><a href="#cb51-389" aria-hidden="true" tabindex="-1"></a><span class="co"># - d=2 (přidali jsme diferenci)</span></span>
+<span id="cb51-390"><a href="#cb51-390" aria-hidden="true" tabindex="-1"></a><span class="co"># - q=2 (ponechali jsme z ACF)</span></span>
+<span id="cb51-391"><a href="#cb51-391" aria-hidden="true" tabindex="-1"></a>fit_manual_d2 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(python_log, </span>
+<span id="cb51-392"><a href="#cb51-392" aria-hidden="true" tabindex="-1"></a>                       <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">2</span>), </span>
+<span id="cb51-393"><a href="#cb51-393" aria-hidden="true" tabindex="-1"></a>                       <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb51-394"><a href="#cb51-394" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-395"><a href="#cb51-395" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;=== MANUÁLNÍ MODEL S d=2 (0,2,2)(1,1,1) ===&quot;</span>)</span>
+<span id="cb51-396"><a href="#cb51-396" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_manual_d2)</span>
+<span id="cb51-397"><a href="#cb51-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-398"><a href="#cb51-398" aria-hidden="true" tabindex="-1"></a><span class="co"># Test významnosti parametrů nového modelu</span></span>
+<span id="cb51-399"><a href="#cb51-399" aria-hidden="true" tabindex="-1"></a>t_stat_d2 <span class="ot">&lt;-</span> fit_manual_d2<span class="sc">$</span>coef <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(fit_manual_d2<span class="sc">$</span>var.coef))</span>
+<span id="cb51-400"><a href="#cb51-400" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">data.frame</span>(<span class="at">Koeficient =</span> <span class="fu">names</span>(fit_manual_d2<span class="sc">$</span>coef), </span>
+<span id="cb51-401"><a href="#cb51-401" aria-hidden="true" tabindex="-1"></a>                 <span class="at">t_statistika =</span> t_stat_d2,</span>
+<span id="cb51-402"><a href="#cb51-402" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Vyznamny =</span> <span class="fu">abs</span>(t_stat_d2) <span class="sc">&gt;</span> <span class="fl">1.96</span>))</span>
+<span id="cb51-403"><a href="#cb51-403" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-404"><a href="#cb51-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-405"><a href="#cb51-405" aria-hidden="true" tabindex="-1"></a>Analýza statistické významnosti parametrů modelu $SARIMA(0,2,2)(1,1,1)_{12}$ odhalila možnosti pro další zjednodušení:</span>
+<span id="cb51-406"><a href="#cb51-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-407"><a href="#cb51-407" aria-hidden="true" tabindex="-1"></a>Parametr ma2: T-statistika indikuje nevýznamnost ($0.15 &lt; 1.96$). Ačkoliv vizuální analýza původně naznačovala potřebu druhého řádu MA, silnější diferenciace ($d=2$) pravděpodobně změnila autokorelační strukturu reziduí natolik, že druhý lag již není nutné explicitně modelovat.Parametr sar1: Sezónní autoregresní složka se opět ukázala jako nadbytečná (t-statistika 1.24).</span>
+<span id="cb51-408"><a href="#cb51-408" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-409"><a href="#cb51-409" aria-hidden="true" tabindex="-1"></a>V souladu s touto nalýzou tyto parametry odstraňujeme a definujeme náš finální manuální model ve tvaru $SARIMA(0,2,1)(0,1,1)_{12}$.</span>
+<span id="cb51-410"><a href="#cb51-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-413"><a href="#cb51-413" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-414"><a href="#cb51-414" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: final-manual-optimalized</span></span>
+<span id="cb51-415"><a href="#cb51-415" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-416"><a href="#cb51-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-417"><a href="#cb51-417" aria-hidden="true" tabindex="-1"></a><span class="co"># Finální manuální model (po redukci nevýznamných parametrů)</span></span>
+<span id="cb51-418"><a href="#cb51-418" aria-hidden="true" tabindex="-1"></a><span class="co"># Odstraňujeme ma2 (q=2 -&gt; q=1)</span></span>
+<span id="cb51-419"><a href="#cb51-419" aria-hidden="true" tabindex="-1"></a><span class="co"># Odstraňujeme sar1 (P=1 -&gt; P=0)</span></span>
+<span id="cb51-420"><a href="#cb51-420" aria-hidden="true" tabindex="-1"></a><span class="co"># Stále držíme d=2, protože to vyžaduje trend!</span></span>
+<span id="cb51-421"><a href="#cb51-421" aria-hidden="true" tabindex="-1"></a>fit_manual_final <span class="ot">&lt;-</span> <span class="fu">Arima</span>(python_log, </span>
+<span id="cb51-422"><a href="#cb51-422" aria-hidden="true" tabindex="-1"></a>                          <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">1</span>), </span>
+<span id="cb51-423"><a href="#cb51-423" aria-hidden="true" tabindex="-1"></a>                          <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb51-424"><a href="#cb51-424" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-425"><a href="#cb51-425" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;=== FINÁLNÍ MANUÁLNÍ MODEL (0,2,1)(0,1,1) ===&quot;</span>)</span>
+<span id="cb51-426"><a href="#cb51-426" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_manual_final)</span>
+<span id="cb51-427"><a href="#cb51-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-428"><a href="#cb51-428" aria-hidden="true" tabindex="-1"></a><span class="co"># Finální kontrola reziduí</span></span>
+<span id="cb51-429"><a href="#cb51-429" aria-hidden="true" tabindex="-1"></a><span class="fu">checkresiduals</span>(fit_manual_final)</span>
+<span id="cb51-430"><a href="#cb51-430" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-431"><a href="#cb51-431" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-432"><a href="#cb51-432" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-433"><a href="#cb51-433" aria-hidden="true" tabindex="-1"></a>Vidíme, že graficky výsledek sice vypadá jako bílý šum, ale box test i korelogram ukazují, že se nám model zvolit manuální nalýzou, tak aby byla residua bílý šum, nepodařilo. Je to dle našho manuálního pohledu nejlepší model který jsme mohli zvolit.\</span>
+<span id="cb51-434"><a href="#cb51-434" aria-hidden="true" tabindex="-1"></a>Pro kontrolu správnosti našeho úsudku nyní necháme algoritmus auto.arima (který minimalizuje informační kritérium AICc), aby našel optimální model sám, a porovnáme ho s naším manuálně redukovaným modelem.</span>
+<span id="cb51-435"><a href="#cb51-435" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-438"><a href="#cb51-438" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-439"><a href="#cb51-439" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: porovnani-auto</span></span>
+<span id="cb51-440"><a href="#cb51-440" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-441"><a href="#cb51-441" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-442"><a href="#cb51-442" aria-hidden="true" tabindex="-1"></a><span class="co"># Automatický návrh (s důrazem na prohledání prostoru)</span></span>
+<span id="cb51-443"><a href="#cb51-443" aria-hidden="true" tabindex="-1"></a>fit_auto <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(python_log, <span class="at">seasonal =</span> <span class="cn">TRUE</span>, <span class="at">stepwise =</span> <span class="cn">FALSE</span>, <span class="at">approximation =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb51-444"><a href="#cb51-444" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-445"><a href="#cb51-445" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;=== AUTO ARIMA NÁVRH ===&quot;</span>)</span>
+<span id="cb51-446"><a href="#cb51-446" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_auto)</span>
+<span id="cb51-447"><a href="#cb51-447" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-448"><a href="#cb51-448" aria-hidden="true" tabindex="-1"></a><span class="co"># Srovnání AICc</span></span>
+<span id="cb51-449"><a href="#cb51-449" aria-hidden="true" tabindex="-1"></a><span class="co"># Pozor: Porovnáváme náš finální manuální model (fit_manual_final) s automatem</span></span>
+<span id="cb51-450"><a href="#cb51-450" aria-hidden="true" tabindex="-1"></a>srovnani <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb51-451"><a href="#cb51-451" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model =</span> <span class="fu">c</span>(<span class="st">&quot;Náš manuální (0,2,1)(0,1,1)&quot;</span>, <span class="st">&quot;Auto ARIMA návrh&quot;</span>),</span>
+<span id="cb51-452"><a href="#cb51-452" aria-hidden="true" tabindex="-1"></a>  <span class="at">AICc =</span> <span class="fu">c</span>(fit_manual_final<span class="sc">$</span>aicc, fit_auto<span class="sc">$</span>aicc)</span>
+<span id="cb51-453"><a href="#cb51-453" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb51-454"><a href="#cb51-454" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(srovnani)</span>
+<span id="cb51-455"><a href="#cb51-455" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-456"><a href="#cb51-456" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-457"><a href="#cb51-457" aria-hidden="true" tabindex="-1"></a>Auto.arima zvolila jiný model s výrazně lepším AICc. Za finální model pro predikci volíme ten s nižším AICc .</span>
+<span id="cb51-458"><a href="#cb51-458" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-461"><a href="#cb51-461" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-462"><a href="#cb51-462" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: final-model-select</span></span>
+<span id="cb51-463"><a href="#cb51-463" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-464"><a href="#cb51-464" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-465"><a href="#cb51-465" aria-hidden="true" tabindex="-1"></a><span class="co"># Výběr vítěze pro predikci</span></span>
+<span id="cb51-466"><a href="#cb51-466" aria-hidden="true" tabindex="-1"></a><span class="co"># Pokud je náš model srovnatelný (rozdíl AICc &lt; 2) nebo lepší, bereme náš.</span></span>
+<span id="cb51-467"><a href="#cb51-467" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (fit_manual_final<span class="sc">$</span>aicc <span class="sc">&lt;</span> (fit_auto<span class="sc">$</span>aicc <span class="sc">+</span> <span class="dv">2</span>)) {</span>
+<span id="cb51-468"><a href="#cb51-468" aria-hidden="true" tabindex="-1"></a>  final_model <span class="ot">&lt;-</span> fit_manual_final</span>
+<span id="cb51-469"><a href="#cb51-469" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Vítěz: Manuální model&quot;</span>)</span>
+<span id="cb51-470"><a href="#cb51-470" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb51-471"><a href="#cb51-471" aria-hidden="true" tabindex="-1"></a>  final_model <span class="ot">&lt;-</span> fit_auto</span>
+<span id="cb51-472"><a href="#cb51-472" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Vítěz: Auto ARIMA&quot;</span>)</span>
+<span id="cb51-473"><a href="#cb51-473" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb51-474"><a href="#cb51-474" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-475"><a href="#cb51-475" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-476"><a href="#cb51-476" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6. Diagnostika modelu</span></span>
+<span id="cb51-477"><a href="#cb51-477" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-478"><a href="#cb51-478" aria-hidden="true" tabindex="-1"></a>Předtím, než model použijeme k predikci, musíme ověřit, zda jeho rezidua (chyby) splňují předpoklady &quot;bílého šumu&quot;. Zkontrolujeme:</span>
+<span id="cb51-479"><a href="#cb51-479" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-480"><a href="#cb51-480" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Zda rezidua nevykazují autokorelaci (podstatná informace nezůstala v datech).</span>
+<span id="cb51-481"><a href="#cb51-481" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-482"><a href="#cb51-482" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Zda mají normální rozdělení.</span>
+<span id="cb51-483"><a href="#cb51-483" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-486"><a href="#cb51-486" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-487"><a href="#cb51-487" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: diagnostika</span></span>
+<span id="cb51-488"><a href="#cb51-488" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-489"><a href="#cb51-489" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-490"><a href="#cb51-490" aria-hidden="true" tabindex="-1"></a><span class="co"># Grafická diagnostika</span></span>
+<span id="cb51-491"><a href="#cb51-491" aria-hidden="true" tabindex="-1"></a><span class="fu">checkresiduals</span>(final_model)</span>
+<span id="cb51-492"><a href="#cb51-492" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-493"><a href="#cb51-493" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-494"><a href="#cb51-494" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-495"><a href="#cb51-495" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-496"><a href="#cb51-496" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Vyhodnocení diagnostiky</span></span>
+<span id="cb51-497"><a href="#cb51-497" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-498"><a href="#cb51-498" aria-hidden="true" tabindex="-1"></a>Vidíme, že p-hodnota Ljung-Boxova testu není $&gt; 0.05$, a zamítáme nulovou hypotézu. To znamená, že model nedokázal zachytil veškerou strukturu v datech a rezidua nejsou zcela náhodná.</span>
+<span id="cb51-499"><a href="#cb51-499" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-500"><a href="#cb51-500" aria-hidden="true" tabindex="-1"></a>Ačkoliv Ljung-Boxův test zamítl hypotézu nezávislosti reziduí (p <span class="sc">\&lt;</span> 0.05), vizuální kontrola a validace na testovacím vzorku ukazují, že model zachycuje hlavní dynamiku trendu a sezónnosti. Zbytková autokorelace je pravděpodobně způsobena strukturálním zlomem v popularitě Pythonu po roce 2017 nebo vysokým řádem diferenciace ($d=2$), který byl nutný pro stacionarizaci. Model se však zdá dostatečně kvalitní a použijeme jej pro naši predikci.</span>
+<span id="cb51-501"><a href="#cb51-501" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-502"><a href="#cb51-502" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Predikce</span></span>
+<span id="cb51-503"><a href="#cb51-503" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-504"><a href="#cb51-504" aria-hidden="true" tabindex="-1"></a>Provedeme predikci na 12 měsíců dopředu. Je nutné provést zpětnou transformaci (exponenciálu), protože model pracoval s logaritmy.</span>
+<span id="cb51-505"><a href="#cb51-505" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-508"><a href="#cb51-508" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-509"><a href="#cb51-509" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: predikce</span></span>
+<span id="cb51-510"><a href="#cb51-510" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb51-511"><a href="#cb51-511" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-512"><a href="#cb51-512" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Predikce v logaritmech</span></span>
+<span id="cb51-513"><a href="#cb51-513" aria-hidden="true" tabindex="-1"></a>forecast_log <span class="ot">&lt;-</span> <span class="fu">forecast</span>(final_model, <span class="at">h =</span> <span class="dv">12</span>)</span>
+<span id="cb51-514"><a href="#cb51-514" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-515"><a href="#cb51-515" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Zpětná transformace (exp)</span></span>
+<span id="cb51-516"><a href="#cb51-516" aria-hidden="true" tabindex="-1"></a>forecast_orig <span class="ot">&lt;-</span> forecast_log</span>
+<span id="cb51-517"><a href="#cb51-517" aria-hidden="true" tabindex="-1"></a>forecast_orig<span class="sc">$</span>mean <span class="ot">&lt;-</span> <span class="fu">exp</span>(forecast_log<span class="sc">$</span>mean)</span>
+<span id="cb51-518"><a href="#cb51-518" aria-hidden="true" tabindex="-1"></a>forecast_orig<span class="sc">$</span>lower <span class="ot">&lt;-</span> <span class="fu">exp</span>(forecast_log<span class="sc">$</span>lower)</span>
+<span id="cb51-519"><a href="#cb51-519" aria-hidden="true" tabindex="-1"></a>forecast_orig<span class="sc">$</span>upper <span class="ot">&lt;-</span> <span class="fu">exp</span>(forecast_log<span class="sc">$</span>upper)</span>
+<span id="cb51-520"><a href="#cb51-520" aria-hidden="true" tabindex="-1"></a>forecast_orig<span class="sc">$</span>x <span class="ot">&lt;-</span> <span class="fu">exp</span>(forecast_log<span class="sc">$</span>x)</span>
+<span id="cb51-521"><a href="#cb51-521" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-522"><a href="#cb51-522" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Vykreslení</span></span>
+<span id="cb51-523"><a href="#cb51-523" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(forecast_orig) <span class="sc">+</span></span>
+<span id="cb51-524"><a href="#cb51-524" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(forecast_orig<span class="sc">$</span>mean, <span class="at">series =</span> <span class="st">&quot;Predikce&quot;</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb51-525"><a href="#cb51-525" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Predikce poptávky po Pythonu (SARIMA)&quot;</span>,</span>
+<span id="cb51-526"><a href="#cb51-526" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Počet dotazů&quot;</span>,</span>
+<span id="cb51-527"><a href="#cb51-527" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Rok&quot;</span>) <span class="sc">+</span></span>
+<span id="cb51-528"><a href="#cb51-528" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb51-529"><a href="#cb51-529" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-530"><a href="#cb51-530" aria-hidden="true" tabindex="-1"></a><span class="co"># Výpis hodnot</span></span>
+<span id="cb51-531"><a href="#cb51-531" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(forecast_orig<span class="sc">$</span>mean, <span class="dv">12</span>))</span>
+<span id="cb51-532"><a href="#cb51-532" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-533"><a href="#cb51-533" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-534"><a href="#cb51-534" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb51-535"><a href="#cb51-535" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-536"><a href="#cb51-536" aria-hidden="true" tabindex="-1"></a><span class="fu"># Závěr</span></span>
+<span id="cb51-537"><a href="#cb51-537" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-538"><a href="#cb51-538" aria-hidden="true" tabindex="-1"></a>V této práci jsme analyzovali vývoj popularity jazyka Python na StackOverflow.Zjistili jsme silný rostoucí trend a sezónnost.Pomocí logaritmické transformace a diferencování jsme data stacionarizovali.Manuální analýzou koeficientů a srovnáním s automatickou selekcí jsme identifikovali jako nejvhodnější model SARIMA(0,2,2)(2,0,0)<span class="sc">\[</span>12<span class="sc">\]</span>.Tento model prošel diagnostickými testy a byl použit k predikci, která očekává další růst zájmu s typickými sezónními výkyvy.</span>
+<span id="cb51-539"><a href="#cb51-539" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-540"><a href="#cb51-540" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Shrnutí výsledků</span></span>
+<span id="cb51-541"><a href="#cb51-541" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-542"><a href="#cb51-542" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Diskuze</span></span>
+<span id="cb51-543"><a href="#cb51-543" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-544"><a href="#cb51-544" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Omezení modelu:** Hlavním limitem modelu je zamítnutí hypotézy o nezávislosti reziduí (Ljung-Boxův test). To naznačuje, že model nedokázal plně absorbovat veškerou strukturu dat, pravděpodobně v důsledku strukturálního zlomu v popularitě Pythonu kolem roku 2017 a přítomnosti heteroskedasticity (změny rozptylu), kterou logaritmická transformace odstranila jen částečně. Model je tedy vhodný pro bodovou predikci trendu, ale intervaly spolehlivosti mohou být mírně podhodnocené.</span>
+<span id="cb51-545"><a href="#cb51-545" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Možnosti vylepšení:** Přesnost modelu by mohla být zvýšena zkrácením časové řady (např. použitím dat pouze od roku 2015), čímž by se eliminoval vliv staršího, odlišného chování trendu. Dále by bylo možné využít pokročilejší modely odolné vůči strukturálním zlomům, jako je např. Prophet, nebo zahrnout exogenní proměnné (např. počet pracovních dní v měsíci).</span>
+<span id="cb51-546"><a href="#cb51-546" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-547"><a href="#cb51-547" aria-hidden="true" tabindex="-1"></a><span class="fu">## Závěrečné poznámky</span></span>
+<span id="cb51-548"><a href="#cb51-548" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-549"><a href="#cb51-549" aria-hidden="true" tabindex="-1"></a>Projekt ukazuje postup od přípravy dat až po modelování a predikci pomocí metod ARIMA a jejich variant.</span>
 </code><button title="Zkopírovat do schránky" class="code-copy-button" data-in-quarto-modal><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

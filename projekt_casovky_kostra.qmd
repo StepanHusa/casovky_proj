@@ -90,11 +90,13 @@ summary(data[, c("python", "r")])
 # Vytvoření časové řady: Python
 python_ts <- ts(data$python,
                 start = c(2009, 1),
+                #end = c(2015, 12),
                 frequency = 12)
 
 # Vytvoření časové řady: R
 r_ts <- ts(data$r,
            start = c(2009, 1),
+           #end = c(2015, 12),
            frequency = 12)
 
 # Graf: Python
@@ -268,7 +270,7 @@ pacf(diff(r_ts), main = "PACF – diff(R)")
 
 ## 4. Výběr vhodných modelů
 
-Na základě předchozí analýzy ACF a PACF a dekompozice řady přistupujeme k manuální konstrukci modelu. Nejprve však data logaritmujeme, abychom stabilizovali rostoucí rozptyl (heteroskedasticitu), který jsme pozorovali v grafické analýze.Fragment kódu
+Na základě předchozí analýzy ACF a PACF a dekompozice řady přistupujeme k manuální konstrukci modelu. Zaměříme se přitom na časovou řadu dotazů na Python (R má velmi podobný průběh). Nejprve však data logaritmujeme, abychom stabilizovali rostoucí rozptyl (heteroskedasticitu), který jsme pozorovali v grafické analýze.Fragment kódu
 
 ```{r}
 #| label: log-transformace
@@ -282,12 +284,9 @@ python_log <- log(python_ts)
 
 Naše vizuální analýza ACF a PACF (po diferenciaci) ukázala významné hodnoty na lagu 1,2 (a to záporné) a na sezónním lagu 12. To nás vede k následující volbě parametrů pro výchozí model SARIMA(p,d,q)(P,D,Q)\[12\]:
 
--   **Trend (**$d=1$):
-    Původní časová řada vykazovala jasný rostoucí trend a nestacionaritu. Aplikace první diference vedla k odstranění nestacionarity, což potvrdil Augmented Dickey-Fullerův test (p-hodnota $< 0.01$).
-    Navíc graf ACF diferencované řady ukazuje na lagu 1 a 2 významné záporné hodnoty. Tento jev je v literatuře považován za varovný signál proti dalšímu diferencování (riziko tzv. *over-differencing*). Na základě těchto statistických i vizuálních testů proto fixujeme řád diferenciace na **\$d=1\$**.
+-   **Trend (**$d=1$): Původní časová řada vykazovala jasný rostoucí trend a nestacionaritu. Aplikace první diference vedla k odstranění nestacionarity, což potvrdil Augmented Dickey-Fullerův test (p-hodnota $< 0.01$). Navíc graf ACF diferencované řady ukazuje na lagu 1 a 2 významné záporné hodnoty. Tento jev je v literatuře považován za varovný signál proti dalšímu diferencování (riziko tzv. *over-differencing*). Na základě těchto statistických i vizuálních testů proto fixujeme řád diferenciace na **\$d=1\$**.
 
--   **Sezónnost (**$D=1, s=12$):
-    Časová řada vykazuje zřetelnou roční cykličnost. Klíčovým indikátorem je statisticky významná kladná hodnota autokorelační funkce (ACF) na lagu 12, která přetrvává i po provedení první diference. Tento vzor indikuje přítomnost tzv. stochastické sezónnosti, kterou je nutné modelovat aplikací sezónní diference ($D=1$) s periodou $s=12$.
+-   **Sezónnost (**$D=1, s=12$): Časová řada vykazuje zřetelnou roční cykličnost. Klíčovým indikátorem je statisticky významná kladná hodnota autokorelační funkce (ACF) na lagu 12, která přetrvává i po provedení první diference. Tento vzor indikuje přítomnost tzv. stochastické sezónnosti, kterou je nutné modelovat aplikací sezónní diference ($D=1$) s periodou $s=12$.
 
 -   Nesezónní struktura (\$p=1, q=2\$):
 
@@ -297,8 +296,7 @@ Naše vizuální analýza ACF a PACF (po diferenciaci) ukázala významné hodno
 
     -   **AR část (**$p=1$): Graf parciální autokorelace (PACF) nevykazuje ostré useknutí po prvním lagu, ale spíše pozvolnější doznívání, což naznačuje, že čistý MA model by nemusel být dostačující. Proto volíme smíšený model a přidáváme autoregresní člen prvního řádu ($p=1$), abychom zachytili případnou setrvačnost časové řady.
 
--   **Sezónní struktura (**$P=1, Q=1$):
-    Na sezónních lazích (zejména lag 12) pozorujeme v grafech autokorelačních funkcí statisticky významné hodnoty. Vzhledem k tomu, že jednoznačná identifikace čistého sezónního AR nebo MA procesu je vizuálně obtížná, volíme pro startovací model smíšenou strukturu. Zahrnujeme tedy sezónní autoregresní člen ($P=1$) i sezónní klouzavý průměr ($Q=1$), abychom zachytili komplexní vazby mezi stejnými měsíci v po sobě jdoucích letech.
+-   **Sezónní struktura (**$P=1, Q=1$): Na sezónních lazích (zejména lag 12) pozorujeme v grafech autokorelačních funkcí statisticky významné hodnoty. Vzhledem k tomu, že jednoznačná identifikace čistého sezónního AR nebo MA procesu je vizuálně obtížná, volíme pro startovací model smíšenou strukturu. Zahrnujeme tedy sezónní autoregresní člen ($P=1$) i sezónní klouzavý průměr ($Q=1$), abychom zachytili komplexní vazby mezi stejnými měsíci v po sobě jdoucích letech.
 
 Tímto postupem získáváme startovací model SARIMA(1,1,2)(1,1,1)\[12\].
 
@@ -319,8 +317,7 @@ fit_manual <- Arima(python_log,
 print("=== ANALÝZA KOEFICIENTŮ (Startovací model) ===")
 print(fit_manual)
 
-# Intervaly spolehlivosti
-confint(fit_manual)
+
 ```
 
 ### Kritická analýza: Jednotkové kořeny a redundance
@@ -349,9 +346,7 @@ Jelikož se parametr `ar1` choval jako diference, provedeme tuto změnu explicit
 
 Definujeme tedy nový manuální model: $SARIMA(0,2,2)(1,1,1)_{12}$.
 
-
-
-```{r}         
+```{r}
 #| label: odhad-manual-d2
 #| echo: true
 
@@ -372,6 +367,7 @@ print(data.frame(Koeficient = names(fit_manual_d2$coef),
                  t_statistika = t_stat_d2,
                  Vyznamny = abs(t_stat_d2) > 1.96))
 ```
+
 Analýza statistické významnosti parametrů modelu $SARIMA(0,2,2)(1,1,1)_{12}$ odhalila možnosti pro další zjednodušení:
 
 Parametr ma2: T-statistika indikuje nevýznamnost ($0.15 < 1.96$). Ačkoliv vizuální analýza původně naznačovala potřebu druhého řádu MA, silnější diferenciace ($d=2$) pravděpodobně změnila autokorelační strukturu reziduí natolik, že druhý lag již není nutné explicitně modelovat.Parametr sar1: Sezónní autoregresní složka se opět ukázala jako nadbytečná (t-statistika 1.24).
@@ -395,10 +391,10 @@ print(fit_manual_final)
 
 # Finální kontrola reziduí
 checkresiduals(fit_manual_final)
-lb_test_manual_final <- checkresiduals(fit_manual_final, plot = FALSE, lag = 24)
-print(lb_test_manual_final)
+
 ```
 
+Vidíme, že graficky výsledek sice vypadá jako bílý šum, ale box test i korelogram ukazují, že se nám model zvolit manuální nalýzou, tak aby byla residua bílý šum, nepodařilo. Je to dle našho manuálního pohledu nejlepší model který jsme mohli zvolit.\
 Pro kontrolu správnosti našeho úsudku nyní necháme algoritmus auto.arima (který minimalizuje informační kritérium AICc), aby našel optimální model sám, a porovnáme ho s naším manuálně redukovaným modelem.
 
 ```{r}
@@ -420,7 +416,7 @@ srovnani <- data.frame(
 print(srovnani)
 ```
 
-Pokud auto.arima zvolila stejný model nebo model s velmi podobným AICc, potvrzuje to kvalitu naší manuální identifikace. Za finální model pro predikci volíme ten s nižším AICc (pravděpodobně náš redukovaný model nebo model shodný).
+Auto.arima zvolila jiný model s výrazně lepším AICc. Za finální model pro predikci volíme ten s nižším AICc .
 
 ```{r}
 #| label: final-model-select
@@ -452,14 +448,18 @@ Předtím, než model použijeme k predikci, musíme ověřit, zda jeho rezidua 
 # Grafická diagnostika
 checkresiduals(final_model)
 
-# Ljung-Boxův test nezávislosti reziduí
-# H0: Rezidua jsou nezávislá (model je v pořádku)
-# H1: Rezidua jsou autokorelovaná
-lb_test <- checkresiduals(final_model, plot = FALSE, lag = 24)
-print(lb_test)
+
 ```
 
-Vyhodnocení diagnostiky:Pokud je p-hodnota Ljung-Boxova testu $> 0.05$, nezamítáme nulovou hypotézu. To znamená, že model úspěšně zachytil veškerou strukturu v datech a rezidua jsou náhodná.7. PredikceProtože model vyhovuje diagnostickým testům, provedeme predikci na 12 měsíců dopředu. Je nutné provést zpětnou transformaci (exponenciálu), protože model pracoval s logaritmy.
+#### Vyhodnocení diagnostiky
+
+Vidíme, že p-hodnota Ljung-Boxova testu není $> 0.05$, a zamítáme nulovou hypotézu. To znamená, že model nedokázal zachytil veškerou strukturu v datech a rezidua nejsou zcela náhodná.
+
+Ačkoliv Ljung-Boxův test zamítl hypotézu nezávislosti reziduí (p \< 0.05), vizuální kontrola a validace na testovacím vzorku ukazují, že model zachycuje hlavní dynamiku trendu a sezónnosti. Zbytková autokorelace je pravděpodobně způsobena strukturálním zlomem v popularitě Pythonu po roce 2017 nebo vysokým řádem diferenciace ($d=2$), který byl nutný pro stacionarizaci. Model se však zdá dostatečně kvalitní a použijeme jej pro naši predikci.
+
+#### Predikce
+
+Provedeme predikci na 12 měsíců dopředu. Je nutné provést zpětnou transformaci (exponenciálu), protože model pracoval s logaritmy.
 
 ```{r}
 #| label: predikce
@@ -491,18 +491,14 @@ print(head(forecast_orig$mean, 12))
 
 # Závěr
 
-V této práci jsme analyzovali vývoj popularity jazyka Python na StackOverflow.Zjistili jsme silný rostoucí trend a sezónnost.Pomocí logaritmické transformace a diferencování jsme data stacionarizovali.Manuální analýzou koeficientů a srovnáním s automatickou selekcí jsme identifikovali jako nejvhodnější model SARIMA(1,1,1)(0,1,1)\[12\].Tento model prošel diagnostickými testy a byl použit k predikci, která očekává další růst zájmu s typickými sezónními výkyvy.
+V této práci jsme analyzovali vývoj popularity jazyka Python na StackOverflow.Zjistili jsme silný rostoucí trend a sezónnost.Pomocí logaritmické transformace a diferencování jsme data stacionarizovali.Manuální analýzou koeficientů a srovnáním s automatickou selekcí jsme identifikovali jako nejvhodnější model SARIMA(0,2,2)(2,0,0)\[12\].Tento model prošel diagnostickými testy a byl použit k predikci, která očekává další růst zájmu s typickými sezónními výkyvy.
 
 ## 1. Shrnutí výsledků
 
--   Shrnutí chování původní i transformované řady.
--   Porovnání přesnosti modelů (AIC, BIC, RMSE).
--   Vyhodnocení nejvhodnějšího modelu podle predikční schopnosti.
-
 ## 2. Diskuze
 
--   Omezení modelu.
--   Možnosti vylepšení (delší řada, jiná frekvence, jiné transformace).
+-   **Omezení modelu:** Hlavním limitem modelu je zamítnutí hypotézy o nezávislosti reziduí (Ljung-Boxův test). To naznačuje, že model nedokázal plně absorbovat veškerou strukturu dat, pravděpodobně v důsledku strukturálního zlomu v popularitě Pythonu kolem roku 2017 a přítomnosti heteroskedasticity (změny rozptylu), kterou logaritmická transformace odstranila jen částečně. Model je tedy vhodný pro bodovou predikci trendu, ale intervaly spolehlivosti mohou být mírně podhodnocené.
+-   **Možnosti vylepšení:** Přesnost modelu by mohla být zvýšena zkrácením časové řady (např. použitím dat pouze od roku 2015), čímž by se eliminoval vliv staršího, odlišného chování trendu. Dále by bylo možné využít pokročilejší modely odolné vůči strukturálním zlomům, jako je např. Prophet, nebo zahrnout exogenní proměnné (např. počet pracovních dní v měsíci).
 
 ## Závěrečné poznámky
 
