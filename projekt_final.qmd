@@ -267,19 +267,51 @@ pacf(diff(r_ts), main = "PACF – diff(R)",lag.max = 36)
 
 -   Původní řada: ACF pomalu klesá → nestacionární, potvrzuje trend.
 
--   Po diferenciaci: ACF má výrazný lag 1,2 PACF také (o něco méně/možná postupný útlum) → vhodné modely `ARIMA(1,1,2)` nebo blízké alternativy.
+-   Po diferenciaci: ACF má výrazný lag 1,2 PACF také (o něco méně/možná postupný útlum) → vhodné modely `ARIMA(1,1,2)` nebo blízké alternativy. Také pozorujeme lineární pokles na sezoních lazích u acf, bude nutná i sezoní diferenciace
 
 ## 4. Výběr vhodných modelů
 
-Na základě předchozí analýzy ACF a PACF a dekompozice řady přistupujeme k manuální konstrukci modelu. Zaměříme se přitom na časovou řadu dotazů na Python (R má velmi podobný průběh korelogramů). Nejprve však data logaritmujeme, abychom stabilizovali rostoucí rozptyl (heteroskedasticitu), který jsme pozorovali v grafické analýze.
+Na základě předchozí analýzy ACF a PACF a dekompozice řady přistupujeme k manuální konstrukci modelu. Zaměříme se přitom na časovou řadu dotazů na Python (R má velmi podobný průběh korelogramů). Nejprve však data logaritmujeme/odmocníme, abychom stabilizovali rostoucí rozptyl (heteroskedasticitu), který jsme pozorovali v grafické analýze.
 
 ```{r}
-python_log<-log(python_ts)
+#| label: boxcoxlambda
+#| echo: true
+print("boxcox lambda")
+BoxCox.lambda(python_ts)
+```
+
+```{r}
+python_log<-sqrt(python_ts)
+```
+
+```{r}
+#| label: acf-pacf_python1
+#| echo: true
+
+par(mfrow = c(1,2))
+
+acf(python_log, main = "ACF – Python",lag.max = 36)
+pacf(python_log, main = "PACF – Python",lag.max = 36)
+```
+```{r}
+#| label: acf-pacf_python2
+#| echo: true
+par(mfrow = c(1,2))
+acf(diff(python_log), main = "ACF – diff(Python)",lag.max = 36)
+pacf(diff(python_log), main = "PACF – diff(Python)",lag.max = 36)
+```
+```{r}
+#| label: acf-pacf_python3
+#| echo: true
+
+par(mfrow = c(1,2))
+acf(diff(diff(python_log),lag=12), main = "ACF – diff(Python)",lag.max = 48)
+pacf(diff(diff(python_log),lag=12), main = "PACF – diff(Python)",lag.max = 48)
 ```
 
 **Odůvodnění volby parametrů modelu SARIMA**
 
-Na základě vizuální analýzy ACF a PACF (po první diferenci) a předchozí dekompozice jsme stanovili parametry pro výchozí model ve tvaru $SARIMA(p,d,q)(P,D,Q)_{[12]}$.
+Na základě vizuální analýzy ACF a PACF odmocněné řady, zdiferencované řady, sezoně zdiferencované řady a předchozí dekompozice jsme stanovili parametry pro výchozí model ve tvaru $SARIMA(p,d,q)(P,D,Q)_{[12]}$.
 
 -   Trend ($d=1$):
 
@@ -287,19 +319,20 @@ Na základě vizuální analýzy ACF a PACF (po první diferenci) a předchozí 
 
 -   Sezónnost ($D=1$):
 
-    Vzhledem k jasné roční cykličnosti a statisticky významné korelaci na lagu 12 v ACF je zřejmé, že řada obsahuje stochastickou sezónnost. Tu modelujeme zavedením sezónní diference ($D=1$) s periodou $s=12$.
+    Vzhledem k jasné roční cykličnosti a statisticky významné korelaci na lagu 12 s lineárním poklesem na dalších lazích v ACF diferencované řady je zřejmé, že řada obsahuje stochastickou sezónnost. Tu modelujeme zavedením sezónní diference ($D=1$) s periodou $s=12$.
 
--   Nesezónní struktura ($p=1, q=2$):
+-   Nesezónní struktura ($p=0, q=1$):
 
-    -   MA část ($q=2$): Graf ACF vykazuje na prvních dvou lazích statisticky významné záporné hodnoty, po kterých následuje prudký pokles do pásma nevýznamnosti (useknutí). Tento vzor silně indikuje proces klouzavých průměrů druhého řádu.
+    -   MA část ($q=1$): Graf ACF vykazuje na lagu 13 statisticky významnou hodnotu. Tento vzor indikuje, že ač na lagu 1 není významná autokorelace, tak že MA část bude i tak potřeba. 
 
-    -   AR část ($p=1$): Graf parciální autokorelace (PACF) je méně jednoznačný – ukazuje spíše pozvolné doznívání než ostré useknutí. Ačkoliv by to mohlo svědčit pro čistý MA model, z důvodu robustnosti volíme pro startovací model smíšenou strukturu a přidáváme autoregresní člen $p=1$. Tím zajistíme, že model bude schopen zachytit případnou setrvačnost, kterou MA složka nepokryje.
+    -   AR část ($p=0$): Graf PACF nevykazuje na žádnách lazích statisticky významné hodnoty. Tento vzor indikuje, že AR část nebude potřeba.
 
--   Sezónní struktura ($P=1, Q=0$):
 
-    Analýza sezónních lagů (12, 24, 36) odhalila jasnou strukturu. Zatímco autokorelační funkce (ACF) na těchto lazích pozvolna klesá, parciální autokorelace (PACF) se po lagu 12 radikálně "odstřihne" a na dalších sezónních násobcích je nevýznamná. Toto chování je charakteristické pro sezónní autoregresní proces prvního řádu. Proto nastavujeme $P=1$ a $Q=0$.
+-   Sezónní struktura ($P=0, Q=1$):
 
-**Výsledný startovací model:** $SARIMA(1,1,2)(1,1,0)_{[12]}$
+    Analýza sezónních lagů (12, 24, 36) odhalila poměrně nejasnou strukturu. Jak ACF tak i PACF vykazují na lagu 12 silnou zápornou autokorelaci a poté se na lazích 24 a dál odstřihnou. Při detailnějším pohledu však vidíme jasné ustřižení na ACF na lagu 24 a spíše pozvolné doznívání sezoních lazích u PACF. Zvolíme proto Q=1 a podrobíme model dalším testům. 
+
+**Výsledný startovací model:** $SARIMA(0,1,1)(0,1,1)_{[12]}$
 
 **Poznámka k riziku:** Jsme si vědomi hrozby redundance parametrů (tzv. *parameter cancellation*), která hrozí u takto specifikovaných smíšených modelů. Tento model slouží jako výchozí bod a v další fázi analýzy budeme testovat statistickou významnost jednotlivých koeficientů s cílem model zjednodušit (zejména v nesezónní části).
 
@@ -311,65 +344,38 @@ Nyní tento model odhadneme a provedeme testování statistické významnosti je
 #| label: odhad-startovaci
 #| echo: true
 
-# Odhad modelu SARIMA(1,1,2)(1,1,1)[12]
+# Odhad modelu SARIMA(0,1,1)(0,1,1)[12]
 # Volba q=2 vychází z pozorování ACF (lag 1, 2)
 fit_manual <- Arima(python_log, 
-                    order = c(1, 1, 2), 
-                    seasonal = c(1, 1, 0))
+                    order = c(0, 1, 1), 
+                    seasonal = c(0, 1, 1))
 
 print("=== ANALÝZA KOEFICIENTŮ (Startovací model) ===")
 print(fit_manual)
 
-
-```
-
-### Kritická analýza: Jednotkové kořeny a redundance parametrů
-
-Při detailním pohledu na odhadnuté parametry narážíme na závažný strukturální problém, který indikuje nesprávnou specifikaci řádu diferenciace.
-
--   **AR část (Jednotkový kořen):** Parametr `ar1` dosahuje hodnoty 0.9935. To indikuje nestacionaritu a snahu modelu suplovat chybějící diferenciaci ($Y_t - Y_{t-1}$).
-
--   **MA část (Hranice invertibility):** Současně parametr `ma1` dosahuje hodnoty -0.9597, což se nebezpečně blíží hranici invertibility (-1).
-
-Tato situace, kdy mají AR a MA kořeny téměř shodnou absolutní hodnotu, ale opačná znaménka, se nazývá **redundance parametrů** (*parameter cancellation*). Model je v tomto stavu nestabilní, protože jeho složky působí proti sobě – AR část se snaží trend v datech uměle vytvořit (suplovat diferenci), zatímco silná MA složka se ho snaží kompenzovat.
-
-Závěr a re-specifikace modelu:
-
-Jediným systematickým řešením této situace je zvýšení řádu diferenciace na $d=2$. Tím "vyjmeme" jednotkový kořen z AR části a převedeme jej na pevnou součást modelu (druhou diferenci). Tímto krokem uvolníme napětí v parametrech a model se stane stabilním.
-
-Protože parametr `ar1` indikoval nedostatečnou diferenciaci, zvyšujeme řád diference na $d=2$ a současně vypouštíme autoregresní člen ($p=0$). Strukturu klouzavých průměrů ($q=2$) i sezónní část $(1,1,0)$ ponecháváme beze změny. Definujeme tak nový model $SARIMA(0,2,2)(1,1,0)_{[12]}$.
-
-```{r}
-#| label: odhad-manual-d2
-#| echo: true
-
-# Nový manuální model:
-# - p=0 (odstranili jsme AR kořen)
-# - d=2 (přidali jsme diferenci)
-# - q=2 (ponechali jsme z ACF)
-fit_manual_d2 <- Arima(python_log, 
-                       order = c(0, 2, 2), 
-                       seasonal = c(1, 1, 0))
-
-print("=== MANUÁLNÍ MODEL S d=2 (0,2,2)(1,1,0) ===")
-print(fit_manual_d2)
-
 # Test významnosti parametrů nového modelu
-t_stat_d2 <- fit_manual_d2$coef / sqrt(diag(fit_manual_d2$var.coef))
-print(data.frame(Koeficient = names(fit_manual_d2$coef), 
+t_stat_d2 <- fit_manual$coef / sqrt(diag(fit_manual$var.coef))
+print(data.frame(Koeficient = names(fit_manual$coef), 
                  t_statistika = t_stat_d2,
                  Vyznamny = abs(t_stat_d2) > 1.96))
+
+checkresiduals(fit_manual)
+
 ```
+
+
 
 ### Redukce modelu na základě statistické významnosti
 
-Analýza t-statistik odhadnutých koeficientů modelu $SARIMA(0,2,2)(1,1,0)_{[12]}$ odhalila prostor pro zjednodušení :
+Analýza t-statistik odhadnutých koeficientů modelu $SARIMA(0,1,0)(1,1,1)_{[12]}$ odhalila prostor pro zjednodušení :
 
--   **Parametr MA(2):** T-statistika dosahuje hodnoty pouze **0.25**, což je hluboko pod kritickou hranicí 1.96. Ačkoliv vizuální analýza (ACF) původně naznačovala potřebu druhého řádu MA, silnější diferenciace ($d=2$) změnila autokorelační strukturu reziduí natolik, že druhý lag již není statisticky významný.
+-   **Parametr MA(1):** T-statistika dosahuje hodnoty pouze **1.1**, což je pod kritickou hranicí 1.96.
 
--   **Parametr SAR(1):** Naopak sezónní autoregresní člen je statisticky významný (t-statistika -3.66), což potvrzuje správnost naší identifikace sezónní složky.
+-   **Parametr SMA(1):** Naopak sezónní MA člen je statisticky významný (t-statistika **-3.46**), což potvrzuje správnost naší identifikace sezónní složky.
 
-V souladu s touto analýzou odstraňujeme nevýznamný parametr $ma2$ a definujeme náš finální manuální model ve tvaru $SARIMA(0,2,1)(1,1,0)_{[12]}$.
+V souladu s touto analýzou odstraňujeme nevýznamný parametr $ma1$ a definujeme náš finální manuální model ve tvaru $SARIMA(0,1,0)(0,1,1)_{[12]}$.
+
+
 
 ```{r}
 #| label: final-manual-optimalized
@@ -379,18 +385,17 @@ V souladu s touto analýzou odstraňujeme nevýznamný parametr $ma2$ a definuje
 # Odstraňujeme ma2 (q=2 -> q=1)
 # Stále držíme d=2, protože to vyžaduje trend
 fit_manual_final <- Arima(python_log, 
-                          order = c(0, 2, 1), 
-                          seasonal = c(1, 1,0 ))
+                          order = c(0, 1, 0), 
+                          seasonal = c(0, 1,1 ))
 
-print("=== FINÁLNÍ MANUÁLNÍ MODEL (0,2,1)(1,1,0) ===")
+print("=== FINÁLNÍ MANUÁLNÍ MODEL (0,1,0)(0,1,1) ===")
 print(fit_manual_final)
 
 # Finální kontrola reziduí
 checkresiduals(fit_manual_final)
-
 ```
 
-Vidíme, že graficky výsledek sice vypadá jako bílý šum, ale box test i korelogram ukazují, že se nám pomocí manuální analýzy nepodařilo nalézt model, jehož rezidua by byla čistým bílým šumem. Dle našeho odborného posouzení se však jedná o nejlepší možný manuální model.
+Vidíme, že graficky výsledek sice vypadá jako bílý šum, ale box test i korelogram ukazují, že se nám pomocí manuální analýzy nepodařilo nalézt model, jehož rezidua by byla čistým bílým šumem, oněco lépe vychází box test i AICc pro nový model s parametrem q=0. Proto tento model volíme jako náš finální . Dle našeho odborného posouzení se i přes nedostatky (např lag 13 významný) jedná o nejlepší možný manuální model.
 
 Pro kontrolu správnosti našeho úsudku nyní necháme algoritmus `auto.arima` (který minimalizuje informační kritérium AICc), aby nalezl optimální model automaticky, a následně jej porovnáme.
 
@@ -402,25 +407,24 @@ Pro kontrolu správnosti našeho úsudku nyní necháme algoritmus `auto.arima` 
 fit_auto <- auto.arima(python_log, seasonal = TRUE, stepwise = FALSE, approximation = FALSE)
 
 print("=== AUTO ARIMA NÁVRH ===")
-print(fit_auto)
 
+print(fit_auto)
+checkresiduals(fit_auto)
 # Srovnání AICc
 # Pozor: Porovnáváme náš finální manuální model (fit_manual_final) s automatem
 srovnani <- data.frame(
-  Model = c("Náš manuální (0,2,1)(1,1,0)", "Auto ARIMA návrh"),
-  AICc = c(fit_manual_final$aicc, fit_auto$aicc)
+  Model = c("Náš manuální (0,1,0)(0,1,1)", "Auto ARIMA návrh","Náš manuální (0,1,1)(0,1,1)"),
+  AICc = c(fit_manual_final$aicc, fit_auto$aicc,fit_manual$aicc)
 )
 print(srovnani)
 ```
 
-Algoritmus `auto.arima` identifikoval model, který dosahuje výrazně lepšího informačního kritéria (AICc). Pro finální predikci proto volíme tento automaticky vybraný model, který pravděpodobně lépe zachytil komplexní sezónní strukturu dat.
-
-Naše manuální analýza však byla klíčová pro pochopení dynamiky řady – **oba přístupy se shodly na nutnosti použití druhé diference** ($d=2$), což potvrzuje naši hypotézu o akcelerujícím trendu a nutnosti řešit redundanci parametrů, kterou jsme identifikovali v prvotních modelech.
+Algoritmus `auto.arima` identifikoval model, který dosahuje o 1 bod menšího  informačního kritéria (AICc). Box test  také zamítá hypotézu o nezávislých reziduích. Pro finální predikci přesto volíme náš manualní  model se statisticky nevýznamným horším AICc a dáváme přednost jeho jednoduchosti.
 
 ```{r}
 #| label: final-model-select
 #| echo: true
-final_model <- fit_auto
+final_model <- fit_manual_final
 ```
 
 ## 6. Diagnostika modelu
@@ -447,21 +451,21 @@ Vidíme, že p-hodnota Ljung-Boxova testu je nižší než hladina významnosti 
 
 ## 7. Predikce
 
-Provedeme predikci na 12 měsíců dopředu. Je nutné provést zpětnou transformaci (exponenciálu), protože model pracoval s logaritmy.
+Provedeme predikci na 12 měsíců dopředu. Je nutné provést zpětnou transformaci (omocnění), protože model pracoval s odmocninami.
 
 ```{r}
 #| label: predikce
 #| echo: true
 
-# 1. Predikce v logaritmech
+# 1. Predikce v odmocnine
 forecast_log <- forecast(final_model, h = 12)
 
 # 2. Zpětná transformace (exp)
 forecast_orig <- forecast_log
-forecast_orig$mean  <- exp(forecast_log$mean)
-forecast_orig$lower <- exp(forecast_log$lower)
-forecast_orig$upper <- exp(forecast_log$upper)
-forecast_orig$x     <- exp(forecast_log$x)
+forecast_orig$mean  <- (forecast_log$mean)^2
+forecast_orig$lower <- (forecast_log$lower)^2
+forecast_orig$upper <- (forecast_log$upper)^2
+forecast_orig$x     <- (forecast_log$x)^2
 
 # 3. Vykreslení
 autoplot(forecast_orig) +
@@ -494,12 +498,12 @@ python_log_test  <- tail(python_log, h)
 # stejný typ modelu jako final_model, znovu odhadnutý na zkrácené řadě
 model_train <- Arima(python_log_train, model = final_model)
 
-# predikce posledníhch 2 let v logaritmech a zpětná transformace
+# predikce posledníhch 2 let v odmocnine a zpětná transformace
 forecast_log_oos  <- forecast(model_train, h = h)
-forecast_oos_mean <- exp(forecast_log_oos$mean)
+forecast_oos_mean <- (forecast_log_oos$mean)^2
 
 # graf: celá řada + predikce posledních 2 let
-autoplot(exp(python_log)) +
+autoplot((python_log)^2) +
   autolayer(forecast_oos_mean, series = "Predikce posledních 2 let", size = 1) +
   labs(title = "Validace modelu – predikce posledních 2 let",
        y = "Počet dotazů",
@@ -511,13 +515,15 @@ autoplot(exp(python_log)) +
 
 # Závěr
 
-V této práci jsme analyzovali vývoj popularity jazyka Python na StackOverflow. Zjistili jsme silný rostoucí trend a sezónnost. Pomocí logaritmické transformace a diferencování jsme data stacionarizovali. Manuální analýzou koeficientů a srovnáním s automatickou selekcí jsme identifikovali jako nejvhodnější model $SARIMA(0,2,2)(2,0,0)_{[12]}$. Tento model prošel diagnostickými testy a byl použit k predikci, která očekává další růst zájmu s typickými sezónními výkyvy.
+V této práci jsme analyzovali vývoj popularity jazyka Python na StackOverflow. Zjistili jsme silný rostoucí trend a sezónnost. Pomocí odmocninové transformace a diferencování jsme data stacionarizovali. Manuální analýzou koeficientů a srovnáním s automatickou selekcí jsme identifikovali jako nejvhodnější model $SARIMA(0,1,0)(0,1,1)_{[12]}$. Tento model prošel diagnostickými testy a byl použit k predikci, která očekává další růst zájmu s typickými sezónními výkyvy.
 
 ## Diskuze
 
--   **Omezení modelu:** Hlavním limitem modelu je zamítnutí hypotézy o nezávislosti reziduí (Ljung-Boxův test). To naznačuje, že model nedokázal plně absorbovat veškerou strukturu dat, pravděpodobně v důsledku strukturálního zlomu v popularitě Pythonu kolem roku 2017 a přítomnosti heteroskedasticity (změny rozptylu), kterou logaritmická transformace odstranila jen částečně. Model je tedy vhodný pro bodovou predikci trendu, ale intervaly spolehlivosti mohou být mírně podhodnocené.
+-   **Omezení modelu:** Hlavním limitem modelu je zamítnutí hypotézy o nezávislosti reziduí (Ljung-Boxův test). To naznačuje, že model nedokázal plně absorbovat veškerou strukturu dat, pravděpodobně v důsledku strukturálního zlomu v popularitě Pythonu kolem roku 2017 a přítomnosti heteroskedasticity (změny rozptylu), kterou odmocninová transformace odstranila jen částečně. Model je tedy vhodný pro bodovou predikci trendu, ale intervaly spolehlivosti mohou být mírně podhodnocené.
 -   **Možnosti vylepšení:** Přesnost modelu by mohla být zvýšena zkrácením časové řady (např. použitím dat pouze od roku 2015), čímž by se eliminoval vliv staršího, odlišného chování trendu. Dále by bylo možné využít pokročilejší modely odolné vůči strukturálním zlomům, jako je např. Prophet, nebo zahrnout exogenní proměnné (např. počet pracovních dní v měsíci).
 
 ## Závěrečné poznámky
 
 Projekt ukazuje postup od přípravy dat až po modelování a predikci pomocí metod ARIMA a jejich variant.
+
+
