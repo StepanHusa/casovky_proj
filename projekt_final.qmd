@@ -172,19 +172,6 @@ plot(decomp_python)
 -   **Sezónnost**: pravidelná, opakující se ročně.
 -   **Remainder**: náhodné fluktuace bez jasné struktury.
 
-#### R
-
-```{r}
-#| label: vyzkum_4
-#| echo: true
-## R
-decomp_r <- decompose(r_ts, type = "additive")
-plot(decomp_r)
-```
-
--   **Trend**: roste, ale méně než Python; kolem 2017 mírné zpomalení.
--   **Sezónnost**: také pravidelná a stabilní.
--   **Remainder**: náhodný šum bez výrazných anomálií.
 
 ## 2. Testování stacionarity
 
@@ -197,38 +184,29 @@ adf_python <- adf.test(python_ts)
 adf_python
 ```
 
-### R
-
-```{r}
-#| label: stacionarita_r
-#| echo: true
-adf_r <- adf.test(r_ts)
-adf_r
-```
-
-### Python - diference
+### Python - odmocina
 
 ```{r}
 #| label: stacionarita_python_diff
 #| echo: true
-adf_python_diff <- adf.test(diff(python_ts))
+adf_python_diff <- adf.test(sqrt(python_ts))
 adf_python_diff
 ```
 
-### R - diference
+### Python - odmocnina a diferencování
 
 ```{r}
 #| label: stacionarita_r_diff
 #| echo: true
-adf_r_diff  <- adf.test(diff(r_ts))
+adf_r_diff  <- adf.test(diff(sqrt(python_ts)))
 adf_r_diff
 ```
 
 **Shrnutí**:
 
--   Obě časové řady jsou nestacionární v původní podobě.
+-   Časová řada je nestacionární v původní podobě.
 -   Důvodem je především rostoucí trend a možná sezónnost.
--   Obě řady se stávají stacionární po jedné diferenci.
+-   Časová řada se stává stacionární po jedné diferenci a odmocninové transformaci.
 -   Pro modelování ARIMA bude nutné řady diferencovat (parametr d = 1).
 
 ## 3. Autokorelace a parciální autokorelace
@@ -241,33 +219,18 @@ adf_r_diff
 
 par(mfrow = c(2,2))
 
-acf(python_ts, main = "ACF – Python",lag.max = 36)
-pacf(python_ts, main = "PACF – Python",lag.max = 36)
+acf(sqrt(python_ts), main = "ACF – sqrt(Python)",lag.max = 36)
+pacf(sqrt(python_ts), main = "PACF – sqrt(Python)",lag.max = 36)
 
-acf(diff(python_ts), main = "ACF – diff(Python)",lag.max = 36)
-pacf(diff(python_ts), main = "PACF – diff(Python)",lag.max = 36)
-```
-
-### R
-
-```{r}
-#| label: acf-pacf_r
-#| echo: true
-
-par(mfrow = c(2,2))
-
-acf(r_ts, main = "ACF – R",lag.max = 36)
-pacf(r_ts, main = "PACF – R",lag.max = 36)
-
-acf(diff(r_ts), main = "ACF – diff(R)",lag.max = 36)
-pacf(diff(r_ts), main = "PACF – diff(R)",lag.max = 36)
+acf(diff(sqrt(python_ts)), main = "ACF – diff(sqrt(Python))",lag.max = 36)
+pacf(diff(python_ts), main = "PACF – diff(sqrt(Python))",lag.max = 36)
 ```
 
 **Shrnutí**:
 
--   Původní řada: ACF pomalu klesá → nestacionární, potvrzuje trend.
+- exponenciální pokles acf, pacf nevýznamná po prvním lagu -> AR(1)
+- řada je stacionární po první diferenci naznačuje ARIMA(1, 1, 0)
 
--   Po diferenciaci: ACF má výrazný lag 1,2 PACF také (o něco méně/možná postupný útlum) → vhodné modely `ARIMA(1,1,2)` nebo blízké alternativy. Také pozorujeme lineární pokles na sezoních lazích u acf, bude nutná i sezoní diferenciace
 
 ## 4. Výběr vhodných modelů
 
